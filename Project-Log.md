@@ -5,7 +5,7 @@
 
 ### Activity Log (Running Notes):
 - **2025-09-17 4:00 PM - 6:00 PM:** Installed and configured a fresh Ubuntu 22.04 LTS OS in VirtualBox. Performed system updates and configured basic settings.
-- **2025-09-17 8:00 PM - 10:00 PM:** Installed all required system dependencies (`build-essential`, `dkms`, `linux-headers`) and the LTTng tools. Successfully compiled the lttng-modules.
+- **2025-09-17 9:00 PM - 10:00 PM:** Installed all required system dependencies (`build-essential`, `dkms`, `linux-headers`) and the LTTng tools. Successfully compiled the lttng-modules.
 - **2025-09-17 10:00 PM - 11:00 PM:** Installed VS Code and Git. Initialized the local and remote Git repositories, and created the initial README.md and PROJECT_LOG.md files.
 
 ### Key Findings & Results:
