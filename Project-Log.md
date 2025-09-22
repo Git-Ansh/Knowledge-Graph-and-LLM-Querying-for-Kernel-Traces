@@ -13,8 +13,12 @@
 
 ### Problems & Blockers:
 - Initially faced issues with missing build-tools (`gcc-12 not found`) but resolved it by reinstalling the `build-essential` package. Also resolved VM performance and full-screen issues by installing and configuring VirtualBox Guest Additions.
+- **LTTng Permission Issue:** Encountered "Can't find valid lttng config" error when using `sudo lttng enable-event` after creating session as regular user. **Solution:** Kernel tracing requires root privileges, so the entire session must be created and managed as root user using `sudo lttng create` followed by `sudo` for all subsequent commands.
+
+### Updated Activity Log:
+- **2025-09-21 8:30 PM - 8:45 PM:** Successfully captured first LTTng kernel traces. Resolved initial permission issues with kernel tracing by creating session as root user instead of regular user.
 
 ### Plan for Next Week (Week 2):
-- Capture initial sample traces using LTTng from a simple benchmark (e.g., `ls -l`).
+- [DONE] Capture initial sample traces using LTTng from a simple benchmark (e.g., `ls -l`).
 - Begin initial analysis of the raw trace file format to understand its structure.
 - Install Neo4j and complete its introductory tutorial.
