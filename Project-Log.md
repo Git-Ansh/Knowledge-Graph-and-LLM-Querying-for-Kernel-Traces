@@ -10,14 +10,14 @@
 - **2025-09-17 4:00 PM - 6:00 PM:** Installed and configured a fresh Ubuntu 22.04 LTS OS in VirtualBox. Performed system updates and configured basic settings.
 - **2025-09-17 9:00 PM - 10:00 PM:** Installed all required system dependencies (`build-essential`, `dkms`, `linux-headers`) and the LTTng tools. Successfully compiled the lttng-modules.
 - **2025-09-17 10:00 PM - 11:00 PM:** Installed VS Code and Git. Initialized the local and remote Git repositories, and created the initial README.md and PROJECT_LOG.md files.
-- **2025-09-21 8:30 PM - 8:45 PM:** Successfully captured first LTTng kernel traces. Resolved initial permission issues with kernel tracing by creating session as root user instead of regular user.
+- **2025-09-21 8:00 PM - 9:00 PM:** Successfully captured first LTTng kernel traces. Resolved initial permission issues with kernel tracing by creating session as root user instead of regular user.
 - **2025-09-22 6:00 PM - 8:00 PM:** Completed an in-depth guided learning session on LTTng fundamentals.
   - Explored the core concepts of tracing, kernel vs. user space, and syscalls.
   - Mastered the basic tracing workflow (`create`, `enable-event`, `start`, `stop`, `view`).
   - Practiced tracing various kernel events, including all syscalls (`--syscall -a`) and specific scheduler events (`sched_switch`).
   - Learned two methods for filtering trace data: post-capture using `| grep` and live filtering with the `--filter` option (e.g., filtering by process name).
   - Understood how to enable pre-defined user-space tracepoints (`--userspace`).
-- **2025-09-22 8:50 PM - 9:15 PM:** Conducted comprehensive 5-second kernel trace session capturing 3.38M events.
+- **2025-09-22 8:00 PM - 9:30 PM:** Conducted comprehensive 5-second kernel trace session capturing 3.38M events.
   - Created dedicated `observations/` directory for structured analysis documentation.
   - Captured high-volume trace data (677K events/second) demonstrating system activity patterns.
   - Performed detailed event frequency analysis identifying top event categories: RCU operations (934K), scheduling stats (450K), cooperative scheduling (372K sched_yield pairs).
