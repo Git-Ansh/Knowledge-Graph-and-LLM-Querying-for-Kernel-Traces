@@ -1,0 +1,29 @@
+# LTTng Trace Files - These are large binary files generated during tracing
+traces/
+*.trace
+*.ctf
+
+# Sample trace outputs for analysis
+sample_trace.txt
+
+# Neo4j database files (when implemented)
+neo4j-data/
+*.db
+
+# Python cache and virtual environments (for future development)
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+
+# IDE and editor files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
