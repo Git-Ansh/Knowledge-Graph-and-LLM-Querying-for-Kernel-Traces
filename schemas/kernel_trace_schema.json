@@ -1,0 +1,467 @@
+{
+  "version": "1.0",
+  "description": "Universal LTTng Kernel Trace Schema",
+  "nodes": {
+    "Process": {
+      "description": "Running process with complete lifecycle information",
+      "required_properties": {
+        "pid": "integer",
+        "name": "string",
+        "start_time": "datetime",
+        "ppid": "integer"
+      },
+      "optional_properties": {
+        "end_time": "datetime",
+        "exit_code": "integer",
+        "command_line": "string",
+        "uid": "integer",
+        "gid": "integer",
+        "cpu_time_user": "integer",
+        "cpu_time_kernel": "integer",
+        "memory_peak": "integer",
+        "thread_count": "integer",
+        "file_descriptors_max": "integer",
+        "priority": "integer",
+        "nice_value": "integer",
+        "working_directory": "string"
+      },
+      "indexes": [
+        "pid",
+        "name",
+        "start_time",
+        "ppid"
+      ],
+      "constraints": [
+        "pid"
+      ]
+    },
+    "Thread": {
+      "description": "Thread execution context with scheduling details",
+      "required_properties": {
+        "tid": "integer",
+        "pid": "integer",
+        "name": "string",
+        "start_time": "datetime"
+      },
+      "optional_properties": {
+        "end_time": "datetime",
+        "priority": "integer",
+        "nice_value": "integer",
+        "cpu_affinity": "string",
+        "stack_size": "integer",
+        "cpu_time": "integer",
+        "context_switches": "integer",
+        "voluntary_switches": "integer",
+        "involuntary_switches": "integer",
+        "state": "string",
+        "policy": "string"
+      },
+      "indexes": [
+        "tid",
+        "pid",
+        "name",
+        "start_time"
+      ],
+      "constraints": [
+        "tid",
+        "pid"
+      ]
+    },
+    "File": {
+      "description": "File system entity with detailed metadata",
+      "required_properties": {
+        "path": "string",
+        "inode": "integer",
+        "device_id": "string"
+      },
+      "optional_properties": {
+        "file_type": "string",
+        "permissions": "string",
+        "size": "integer",
+        "owner_uid": "integer",
+        "owner_gid": "integer",
+        "access_time": "datetime",
+        "modify_time": "datetime",
+        "change_time": "datetime",
+        "link_count": "integer",
+        "block_size": "integer",
+        "blocks": "integer",
+        "flags": "string"
+      },
+      "indexes": [
+        "path",
+        "inode",
+        "device_id"
+      ],
+      "constraints": [
+        "inode",
+        "device_id"
+      ]
+    },
+    "Socket": {
+      "description": "Network socket with connection details",
+      "required_properties": {
+        "socket_id": "string",
+        "family": "string",
+        "type": "string",
+        "protocol": "string"
+      },
+      "optional_properties": {
+        "local_address": "string",
+        "local_port": "integer",
+        "remote_address": "string",
+        "remote_port": "integer",
+        "state": "string",
+        "send_buffer_size": "integer",
+        "receive_buffer_size": "integer",
+        "bytes_sent": "integer",
+        "bytes_received": "integer",
+        "packets_sent": "integer",
+        "packets_received": "integer",
+        "connection_time": "datetime",
+        "close_time": "datetime"
+      },
+      "indexes": [
+        "socket_id",
+        "family",
+        "local_address",
+        "remote_address"
+      ],
+      "constraints": [
+        "socket_id"
+      ]
+    },
+    "CPU": {
+      "description": "CPU core with performance metrics",
+      "required_properties": {
+        "cpu_id": "integer",
+        "model": "string"
+      },
+      "optional_properties": {
+        "frequency": "integer",
+        "cache_size_l1": "integer",
+        "cache_size_l2": "integer",
+        "cache_size_l3": "integer",
+        "utilization": "float",
+        "temperature": "float",
+        "power_consumption": "float",
+        "idle_time": "integer",
+        "user_time": "integer",
+        "system_time": "integer",
+        "iowait_time": "integer",
+        "irq_time": "integer",
+        "softirq_time": "integer"
+      },
+      "indexes": [
+        "cpu_id"
+      ],
+      "constraints": [
+        "cpu_id"
+      ]
+    },
+    "MemoryRegion": {
+      "description": "Memory allocation with detailed attributes",
+      "required_properties": {
+        "start_address": "string",
+        "size": "integer",
+        "pid": "integer"
+      },
+      "optional_properties": {
+        "end_address": "string",
+        "permissions": "string",
+        "region_type": "string",
+        "backing_file": "string",
+        "offset": "integer",
+        "flags": "string",
+        "allocation_time": "datetime",
+        "free_time": "datetime",
+        "access_count": "integer",
+        "page_faults": "integer",
+        "resident_pages": "integer",
+        "shared_pages": "integer"
+      },
+      "indexes": [
+        "start_address",
+        "pid",
+        "region_type"
+      ],
+      "constraints": [
+        "start_address",
+        "pid"
+      ]
+    },
+    "SyscallEvent": {
+      "description": "Individual system call execution with full context",
+      "required_properties": {
+        "event_id": "string",
+        "syscall_name": "string",
+        "timestamp": "datetime",
+        "event_type": "string",
+        "tid": "integer",
+        "cpu_id": "integer"
+      },
+      "optional_properties": {
+        "duration": "integer",
+        "return_value": "string",
+        "error_code": "string",
+        "parameters": "string",
+        "stack_trace": "string",
+        "instruction_pointer": "string",
+        "cpu_cycles": "integer",
+        "cache_misses": "integer",
+        "context_switches": "integer",
+        "preemption_count": "integer",
+        "priority": "integer",
+        "memory_usage": "integer"
+      },
+      "indexes": [
+        "event_id",
+        "syscall_name",
+        "timestamp",
+        "tid",
+        "cpu_id"
+      ],
+      "constraints": [
+        "event_id"
+      ]
+    },
+    "SyscallType": {
+      "description": "System call type with aggregated statistics",
+      "required_properties": {
+        "name": "string",
+        "category": "string"
+      },
+      "optional_properties": {
+        "frequency": "integer",
+        "total_duration": "integer",
+        "avg_duration": "float",
+        "min_duration": "integer",
+        "max_duration": "integer",
+        "std_dev_duration": "float",
+        "success_rate": "float",
+        "error_rate": "float",
+        "cpu_cycles_avg": "integer",
+        "cache_miss_rate": "float",
+        "description": "string",
+        "signature": "string"
+      },
+      "indexes": [
+        "name",
+        "category"
+      ],
+      "constraints": [
+        "name"
+      ]
+    },
+    "Timer": {
+      "description": "Kernel timer with timing information",
+      "required_properties": {
+        "timer_id": "string",
+        "function_name": "string",
+        "expires_at": "datetime"
+      },
+      "optional_properties": {
+        "created_at": "datetime",
+        "interval": "integer",
+        "flags": "string",
+        "cpu_id": "integer",
+        "callback_duration": "integer",
+        "jiffies": "integer",
+        "precision": "string"
+      },
+      "indexes": [
+        "timer_id",
+        "function_name",
+        "expires_at"
+      ],
+      "constraints": [
+        "timer_id"
+      ]
+    },
+    "IRQ": {
+      "description": "Interrupt request with handling details",
+      "required_properties": {
+        "irq_number": "integer",
+        "timestamp": "datetime"
+      },
+      "optional_properties": {
+        "handler_name": "string",
+        "device_name": "string",
+        "cpu_id": "integer",
+        "duration": "integer",
+        "count": "integer",
+        "flags": "string",
+        "priority": "integer",
+        "nested_level": "integer"
+      },
+      "indexes": [
+        "irq_number",
+        "timestamp",
+        "cpu_id"
+      ],
+      "constraints": []
+    }
+  },
+  "relationships": {
+    "SPAWNED": {
+      "source_node": "Process",
+      "target_node": "Process",
+      "description": "Parent process creates child process",
+      "required_properties": {
+        "timestamp": "datetime",
+        "method": "string"
+      },
+      "optional_properties": {
+        "clone_flags": "string",
+        "exit_signal": "integer",
+        "success": "boolean"
+      }
+    },
+    "CONTAINS": {
+      "source_node": "Process",
+      "target_node": "Thread",
+      "description": "Process contains thread",
+      "required_properties": {
+        "creation_time": "datetime"
+      },
+      "optional_properties": {
+        "termination_time": "datetime",
+        "cpu_time_user": "integer",
+        "cpu_time_kernel": "integer"
+      }
+    },
+    "SCHEDULED_ON": {
+      "source_node": "Thread",
+      "target_node": "CPU",
+      "description": "Thread scheduled to run on CPU",
+      "required_properties": {
+        "timestamp": "datetime",
+        "duration": "integer"
+      },
+      "optional_properties": {
+        "priority": "integer",
+        "preempted": "boolean",
+        "voluntary": "boolean",
+        "prev_thread_tid": "integer",
+        "wait_time": "integer",
+        "cpu_utilization": "float"
+      }
+    },
+    "EXECUTED": {
+      "source_node": "Thread",
+      "target_node": "SyscallEvent",
+      "description": "Thread executes system call",
+      "required_properties": {
+        "timestamp": "datetime"
+      },
+      "optional_properties": {
+        "context_id": "string",
+        "stack_depth": "integer",
+        "cpu_id": "integer"
+      }
+    },
+    "INSTANTIATED": {
+      "source_node": "SyscallEvent",
+      "target_node": "SyscallType",
+      "description": "Syscall event is instance of syscall type",
+      "required_properties": {
+        "timestamp": "datetime"
+      },
+      "optional_properties": {
+        "parameters_match": "boolean",
+        "duration_percentile": "float"
+      }
+    },
+    "OPENED": {
+      "source_node": "SyscallEvent",
+      "target_node": "File",
+      "description": "System call opens file",
+      "required_properties": {
+        "timestamp": "datetime",
+        "flags": "string"
+      },
+      "optional_properties": {
+        "mode": "string",
+        "file_descriptor": "integer",
+        "success": "boolean",
+        "latency": "integer"
+      }
+    },
+    "READ_FROM": {
+      "source_node": "SyscallEvent",
+      "target_node": "File",
+      "description": "System call reads from file",
+      "required_properties": {
+        "timestamp": "datetime",
+        "bytes_requested": "integer"
+      },
+      "optional_properties": {
+        "bytes_actual": "integer",
+        "offset": "integer",
+        "buffer_address": "string",
+        "latency": "integer",
+        "throughput": "float",
+        "io_wait_time": "integer"
+      }
+    },
+    "WROTE_TO": {
+      "source_node": "SyscallEvent",
+      "target_node": "File",
+      "description": "System call writes to file",
+      "required_properties": {
+        "timestamp": "datetime",
+        "bytes_requested": "integer"
+      },
+      "optional_properties": {
+        "bytes_actual": "integer",
+        "offset": "integer",
+        "sync_type": "string",
+        "latency": "integer",
+        "throughput": "float",
+        "fsync_required": "boolean"
+      }
+    },
+    "ALLOCATED": {
+      "source_node": "SyscallEvent",
+      "target_node": "MemoryRegion",
+      "description": "System call allocates memory",
+      "required_properties": {
+        "timestamp": "datetime",
+        "size": "integer"
+      },
+      "optional_properties": {
+        "address": "string",
+        "flags": "string",
+        "protection": "string",
+        "success": "boolean",
+        "latency": "integer"
+      }
+    },
+    "FOLLOWED_BY": {
+      "source_node": "SyscallEvent",
+      "target_node": "SyscallEvent",
+      "description": "Temporal sequence between events",
+      "required_properties": {
+        "time_delta": "integer"
+      },
+      "optional_properties": {
+        "same_thread": "boolean",
+        "causal_relationship": "string",
+        "context_switches": "integer"
+      }
+    },
+    "CAUSED_BY": {
+      "source_node": "SyscallEvent",
+      "target_node": "SyscallEvent",
+      "description": "Causal relationship between events",
+      "required_properties": {
+        "timestamp": "datetime",
+        "causality_type": "string"
+      },
+      "optional_properties": {
+        "confidence": "float",
+        "evidence": "string"
+      }
+    }
+  }
+}

@@ -10,6 +10,9 @@ sample_trace.txt
 neo4j-data/
 *.db
 
+# Database tools output files (context and summary files)
+db-tools/*.json
+
 # Python cache and virtual environments (for future development)
 __pycache__/
 *.pyc

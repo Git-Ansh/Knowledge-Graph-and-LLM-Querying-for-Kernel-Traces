@@ -1,0 +1,1198 @@
+[
+  {
+    "event_id": "summary_0_sched_yield",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "sched_yield",
+    "count": 4403,
+    "avg_duration": 1.6740901800369166e-06,
+    "total_duration": 0.007371019062702544,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10001,
+      10002,
+      10003,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_sched_yield_0",
+      "10003_sched_yield_4",
+      "10001_sched_yield_5"
+    ]
+  },
+  {
+    "event_id": "summary_0_futex",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "futex",
+    "count": 450,
+    "avg_duration": 3.307304448551602e-05,
+    "total_duration": 0.014882870018482208,
+    "success_rate": 0.8066666666666666,
+    "error_count": 87,
+    "tids_involved": [
+      10001,
+      10002,
+      10003,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_futex_1",
+      "10001_futex_2",
+      "10001_futex_3"
+    ]
+  },
+  {
+    "event_id": "summary_0_recvmsg",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "recvmsg",
+    "count": 27,
+    "avg_duration": 3.448405078853722e-06,
+    "total_duration": 9.31069371290505e-05,
+    "success_rate": 0.3333333333333333,
+    "error_count": 18,
+    "tids_involved": [
+      1772,
+      10000,
+      10001,
+      10002,
+      10003
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10000_recvmsg_689",
+      "10000_recvmsg_690",
+      "10003_recvmsg_826"
+    ]
+  },
+  {
+    "event_id": "summary_0_epoll_pwait",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "epoll_pwait",
+    "count": 11,
+    "avg_duration": 2.5057270911268212e-05,
+    "total_duration": 0.00027562998002395034,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10001,
+      10002,
+      10003
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_epoll_pwait_739",
+      "10001_epoll_pwait_832",
+      "10002_epoll_pwait_961"
+    ]
+  },
+  {
+    "event_id": "summary_0_write",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "write",
+    "count": 200,
+    "avg_duration": 9.632564033381641e-06,
+    "total_duration": 0.0019265128066763282,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12164,
+      12165,
+      12167,
+      12168,
+      1772,
+      10001,
+      10002,
+      10003,
+      3225,
+      12156
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_write_747",
+      "10001_write_814",
+      "10001_write_815"
+    ]
+  },
+  {
+    "event_id": "summary_0_epoll_wait",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "epoll_wait",
+    "count": 8,
+    "avg_duration": 0.00037051449908176437,
+    "total_duration": 0.002964115992654115,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10001,
+      10002,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_epoll_wait_827",
+      "10001_epoll_wait_1679",
+      "10001_epoll_wait_2311"
+    ]
+  },
+  {
+    "event_id": "summary_0_read",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "read",
+    "count": 318,
+    "avg_duration": 3.2432137186047414e-06,
+    "total_duration": 0.0010313419625163078,
+    "success_rate": 0.9874213836477987,
+    "error_count": 4,
+    "tids_involved": [
+      12164,
+      12165,
+      12166,
+      12167,
+      12168,
+      1772,
+      10000,
+      10001,
+      10002,
+      10003,
+      3225,
+      12156
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_read_834",
+      "10002_read_887",
+      "10002_read_1034"
+    ]
+  },
+  {
+    "event_id": "summary_0_access",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "access",
+    "count": 20,
+    "avg_duration": 5.400249938247725e-06,
+    "total_duration": 0.00010800499876495451,
+    "success_rate": 0.2,
+    "error_count": 16,
+    "tids_involved": [
+      12164,
+      12166,
+      12167,
+      1772,
+      10000,
+      10003
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10003_access_962",
+      "10003_access_1118",
+      "10003_access_1166"
+    ]
+  },
+  {
+    "event_id": "summary_0_readlink",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "readlink",
+    "count": 10,
+    "avg_duration": 2.2223990526981653e-06,
+    "total_duration": 2.2223990526981652e-05,
+    "success_rate": 0.0,
+    "error_count": 10,
+    "tids_involved": [
+      10003
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10003_readlink_975",
+      "10003_readlink_977",
+      "10003_readlink_1008"
+    ]
+  },
+  {
+    "event_id": "summary_0_unknown",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "unknown",
+    "count": 1,
+    "avg_duration": 3.0600058380514383e-06,
+    "total_duration": 3.0600058380514383e-06,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10003
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10003_unknown_1180"
+    ]
+  },
+  {
+    "event_id": "summary_0_ioctl",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "ioctl",
+    "count": 55,
+    "avg_duration": 0.00015546330912250347,
+    "total_duration": 0.008550482001737691,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10001,
+      10002,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_ioctl_1692",
+      "10001_ioctl_1693",
+      "10001_ioctl_1694"
+    ]
+  },
+  {
+    "event_id": "summary_0_sync_file_range",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "sync_file_range",
+    "count": 11,
+    "avg_duration": 0.00012836990803903476,
+    "total_duration": 0.0014120689884293824,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10001,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_sync_file_range_1766",
+      "10001_sync_file_range_2180",
+      "1772_sync_file_range_3650"
+    ]
+  },
+  {
+    "event_id": "summary_0_sendto",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "sendto",
+    "count": 3,
+    "avg_duration": 4.390500544104725e-05,
+    "total_duration": 0.00013171501632314175,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10001,
+      10003
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_sendto_1981",
+      "10003_sendto_2607",
+      "10003_sendto_2672"
+    ]
+  },
+  {
+    "event_id": "summary_0_poll",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "poll",
+    "count": 10,
+    "avg_duration": 2.4260400095954537e-05,
+    "total_duration": 0.00024260400095954537,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10001,
+      10002,
+      10003
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_poll_2301",
+      "10001_poll_2414",
+      "10002_poll_2552"
+    ]
+  },
+  {
+    "event_id": "summary_0_sendmsg",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "sendmsg",
+    "count": 1,
+    "avg_duration": 3.647200355771929e-05,
+    "total_duration": 3.647200355771929e-05,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10001
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10001_sendmsg_2406"
+    ]
+  },
+  {
+    "event_id": "summary_0_writev",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "writev",
+    "count": 2,
+    "avg_duration": 4.8392008466180414e-05,
+    "total_duration": 9.678401693236083e-05,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10002,
+      10003
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10003_writev_3171",
+      "10002_writev_3361"
+    ]
+  },
+  {
+    "event_id": "summary_0_setitimer",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "setitimer",
+    "count": 2,
+    "avg_duration": 1.9354920368641615e-06,
+    "total_duration": 3.870984073728323e-06,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      10002
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10002_setitimer_3216",
+      "10002_setitimer_3369"
+    ]
+  },
+  {
+    "event_id": "summary_0_getpid",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "getpid",
+    "count": 1,
+    "avg_duration": 9.530049283057451e-07,
+    "total_duration": 9.530049283057451e-07,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_getpid_3501"
+    ]
+  },
+  {
+    "event_id": "summary_0_fadvise64",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "fadvise64",
+    "count": 5,
+    "avg_duration": 3.859002026729285e-06,
+    "total_duration": 1.929501013364643e-05,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_fadvise64_3554",
+      "1772_fadvise64_3653",
+      "1772_fadvise64_3848"
+    ]
+  },
+  {
+    "event_id": "summary_0_close",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "close",
+    "count": 306,
+    "avg_duration": 1.2528821422712379e-06,
+    "total_duration": 0.0003833819355349988,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12164,
+      12165,
+      12166,
+      12167,
+      12168,
+      1772,
+      10000,
+      10002,
+      10003,
+      12156
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10000_close_5898",
+      "10003_close_5912",
+      "1772_close_6328"
+    ]
+  },
+  {
+    "event_id": "summary_0_newfstatat",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "newfstatat",
+    "count": 302,
+    "avg_duration": 8.597346685752766e-07,
+    "total_duration": 0.00025963986990973353,
+    "success_rate": 0.9105960264900662,
+    "error_count": 27,
+    "tids_involved": [
+      12164,
+      12165,
+      12166,
+      12167,
+      12168,
+      1772,
+      10000,
+      10002,
+      10003,
+      12156
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10003_newfstatat_5913",
+      "12156_newfstatat_6708",
+      "12156_newfstatat_6746"
+    ]
+  },
+  {
+    "event_id": "summary_0_openat",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "openat",
+    "count": 307,
+    "avg_duration": 3.7332280601165486e-06,
+    "total_duration": 0.0011461010144557804,
+    "success_rate": 0.749185667752443,
+    "error_count": 77,
+    "tids_involved": [
+      12164,
+      12165,
+      12166,
+      12167,
+      12168,
+      1772,
+      10000,
+      12156
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "10000_openat_7399",
+      "10000_openat_8187",
+      "10000_openat_8189"
+    ]
+  },
+  {
+    "event_id": "summary_0_open",
+    "event_type": "aggregated_syscall",
+    "window_id": 0,
+    "window_start": 68697.565736803,
+    "window_size": 0.1,
+    "syscall_name": "open",
+    "count": 2,
+    "avg_duration": 1.0611001926008612e-05,
+    "total_duration": 2.1222003852017224e-05,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12168_open_16143",
+      "12168_open_16146"
+    ]
+  },
+  {
+    "event_id": "summary_1_write",
+    "event_type": "aggregated_syscall",
+    "window_id": 1,
+    "window_start": 68697.665736803,
+    "window_size": 0.1,
+    "syscall_name": "write",
+    "count": 52,
+    "avg_duration": 1.1392614676599176e-05,
+    "total_duration": 0.0005924159631831571,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      1,
+      10002,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_write_26271",
+      "1772_write_26272",
+      "1772_write_26274"
+    ]
+  },
+  {
+    "event_id": "summary_1_read",
+    "event_type": "aggregated_syscall",
+    "window_id": 1,
+    "window_start": 68697.665736803,
+    "window_size": 0.1,
+    "syscall_name": "read",
+    "count": 44,
+    "avg_duration": 2.8045231539925393e-06,
+    "total_duration": 0.00012339901877567172,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      1,
+      12168,
+      1772,
+      10002,
+      3225
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_read_26283",
+      "1772_read_32996",
+      "1772_read_34980"
+    ]
+  },
+  {
+    "event_id": "summary_1_openat",
+    "event_type": "aggregated_syscall",
+    "window_id": 1,
+    "window_start": 68697.665736803,
+    "window_size": 0.1,
+    "syscall_name": "openat",
+    "count": 5,
+    "avg_duration": 1.1515201185829937e-05,
+    "total_duration": 5.757600592914969e-05,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_openat_57693",
+      "1772_openat_57704",
+      "1772_openat_57712"
+    ]
+  },
+  {
+    "event_id": "summary_1_newfstatat",
+    "event_type": "aggregated_syscall",
+    "window_id": 1,
+    "window_start": 68697.665736803,
+    "window_size": 0.1,
+    "syscall_name": "newfstatat",
+    "count": 4,
+    "avg_duration": 1.3625030987896025e-06,
+    "total_duration": 5.45001239515841e-06,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_newfstatat_57694",
+      "1772_newfstatat_57705",
+      "1772_newfstatat_57713"
+    ]
+  },
+  {
+    "event_id": "summary_1_close",
+    "event_type": "aggregated_syscall",
+    "window_id": 1,
+    "window_start": 68697.665736803,
+    "window_size": 0.1,
+    "syscall_name": "close",
+    "count": 5,
+    "avg_duration": 1.7539947293698789e-06,
+    "total_duration": 8.769973646849394e-06,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_close_57699",
+      "1772_close_57710",
+      "1772_close_57716"
+    ]
+  },
+  {
+    "event_id": "summary_2_write",
+    "event_type": "aggregated_syscall",
+    "window_id": 2,
+    "window_start": 68697.76573680299,
+    "window_size": 0.1,
+    "syscall_name": "write",
+    "count": 55,
+    "avg_duration": 2.2951082262972538e-06,
+    "total_duration": 0.00012623095244634897,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_write_93505",
+      "1772_write_93507",
+      "1772_write_93594"
+    ]
+  },
+  {
+    "event_id": "summary_2_read",
+    "event_type": "aggregated_syscall",
+    "window_id": 2,
+    "window_start": 68697.76573680299,
+    "window_size": 0.1,
+    "syscall_name": "read",
+    "count": 28,
+    "avg_duration": 1.7005705948187305e-06,
+    "total_duration": 4.761597665492445e-05,
+    "success_rate": 0.9642857142857143,
+    "error_count": 1,
+    "tids_involved": [
+      12168,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_read_93506",
+      "1772_read_93511",
+      "1772_read_93608"
+    ]
+  },
+  {
+    "event_id": "summary_2_openat",
+    "event_type": "aggregated_syscall",
+    "window_id": 2,
+    "window_start": 68697.76573680299,
+    "window_size": 0.1,
+    "syscall_name": "openat",
+    "count": 1,
+    "avg_duration": 1.8926002667285502e-05,
+    "total_duration": 1.8926002667285502e-05,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12168_openat_94623"
+    ]
+  },
+  {
+    "event_id": "summary_2_close",
+    "event_type": "aggregated_syscall",
+    "window_id": 2,
+    "window_start": 68697.76573680299,
+    "window_size": 0.1,
+    "syscall_name": "close",
+    "count": 1,
+    "avg_duration": 2.982997102662921e-06,
+    "total_duration": 2.982997102662921e-06,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12168_close_94625"
+    ]
+  },
+  {
+    "event_id": "summary_3_write",
+    "event_type": "aggregated_syscall",
+    "window_id": 3,
+    "window_start": 68697.865736803,
+    "window_size": 0.1,
+    "syscall_name": "write",
+    "count": 48,
+    "avg_duration": 1.826358220569091e-05,
+    "total_duration": 0.0008766519458731636,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12168_write_95032",
+      "1772_write_95042",
+      "1772_write_95045"
+    ]
+  },
+  {
+    "event_id": "summary_3_read",
+    "event_type": "aggregated_syscall",
+    "window_id": 3,
+    "window_start": 68697.865736803,
+    "window_size": 0.1,
+    "syscall_name": "read",
+    "count": 40,
+    "avg_duration": 2.455175490467809e-06,
+    "total_duration": 9.820701961871237e-05,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12168_read_95035",
+      "1772_read_95058",
+      "1772_read_95065"
+    ]
+  },
+  {
+    "event_id": "summary_3_openat",
+    "event_type": "aggregated_syscall",
+    "window_id": 3,
+    "window_start": 68697.865736803,
+    "window_size": 0.1,
+    "syscall_name": "openat",
+    "count": 7,
+    "avg_duration": 5.552542903127947e-05,
+    "total_duration": 0.0003886780032189563,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_openat_95427",
+      "1772_openat_95432",
+      "1772_openat_95438"
+    ]
+  },
+  {
+    "event_id": "summary_3_newfstatat",
+    "event_type": "aggregated_syscall",
+    "window_id": 3,
+    "window_start": 68697.865736803,
+    "window_size": 0.1,
+    "syscall_name": "newfstatat",
+    "count": 4,
+    "avg_duration": 1.825900108087808e-05,
+    "total_duration": 7.303600432351232e-05,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_newfstatat_95428",
+      "1772_newfstatat_95434",
+      "1772_newfstatat_95439"
+    ]
+  },
+  {
+    "event_id": "summary_3_close",
+    "event_type": "aggregated_syscall",
+    "window_id": 3,
+    "window_start": 68697.865736803,
+    "window_size": 0.1,
+    "syscall_name": "close",
+    "count": 7,
+    "avg_duration": 2.8222836720358046e-06,
+    "total_duration": 1.9755985704250634e-05,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_close_95430",
+      "1772_close_95436",
+      "1772_close_95441"
+    ]
+  },
+  {
+    "event_id": "summary_4_write",
+    "event_type": "aggregated_syscall",
+    "window_id": 4,
+    "window_start": 68697.96573680299,
+    "window_size": 0.1,
+    "syscall_name": "write",
+    "count": 90,
+    "avg_duration": 2.4836089222743693e-05,
+    "total_duration": 0.0022352480300469324,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      1,
+      12168,
+      1772,
+      12173,
+      3342,
+      12174,
+      3225
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_write_95948",
+      "1772_write_95960",
+      "1772_write_95961"
+    ]
+  },
+  {
+    "event_id": "summary_4_read",
+    "event_type": "aggregated_syscall",
+    "window_id": 4,
+    "window_start": 68697.96573680299,
+    "window_size": 0.1,
+    "syscall_name": "read",
+    "count": 65,
+    "avg_duration": 2.254367931387745e-06,
+    "total_duration": 0.00014653391554020345,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      1,
+      12168,
+      1772,
+      12173,
+      3342,
+      12174,
+      3225
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12168_read_95950",
+      "1772_read_95963",
+      "1772_read_95967"
+    ]
+  },
+  {
+    "event_id": "summary_4_close",
+    "event_type": "aggregated_syscall",
+    "window_id": 4,
+    "window_start": 68697.96573680299,
+    "window_size": 0.1,
+    "syscall_name": "close",
+    "count": 30,
+    "avg_duration": 2.1551666820111373e-05,
+    "total_duration": 0.0006465500046033412,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      1,
+      12168,
+      1772,
+      12173,
+      12174
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12168_close_95952",
+      "12168_close_95953",
+      "1772_close_96042"
+    ]
+  },
+  {
+    "event_id": "summary_4_openat",
+    "event_type": "aggregated_syscall",
+    "window_id": 4,
+    "window_start": 68697.96573680299,
+    "window_size": 0.1,
+    "syscall_name": "openat",
+    "count": 9,
+    "avg_duration": 0.00015337410958535556,
+    "total_duration": 0.0013803669862682,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12168,
+      1772,
+      12173,
+      12174
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12168_openat_96099",
+      "1772_openat_96397",
+      "12168_openat_99200"
+    ]
+  },
+  {
+    "event_id": "summary_4_newfstatat",
+    "event_type": "aggregated_syscall",
+    "window_id": 4,
+    "window_start": 68697.96573680299,
+    "window_size": 0.1,
+    "syscall_name": "newfstatat",
+    "count": 17,
+    "avg_duration": 1.4158243121688856e-06,
+    "total_duration": 2.4069013306871057e-05,
+    "success_rate": 0.6470588235294118,
+    "error_count": 6,
+    "tids_involved": [
+      12168,
+      1772,
+      12173,
+      12174
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12168_newfstatat_96101",
+      "1772_newfstatat_99601",
+      "1772_newfstatat_99609"
+    ]
+  },
+  {
+    "event_id": "summary_4_access",
+    "event_type": "aggregated_syscall",
+    "window_id": 4,
+    "window_start": 68697.96573680299,
+    "window_size": 0.1,
+    "syscall_name": "access",
+    "count": 2,
+    "avg_duration": 4.057503247167915e-06,
+    "total_duration": 8.11500649433583e-06,
+    "success_rate": 0.0,
+    "error_count": 2,
+    "tids_involved": [
+      1772,
+      12173
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_access_99599",
+      "12173_access_99735"
+    ]
+  },
+  {
+    "event_id": "summary_5_access",
+    "event_type": "aggregated_syscall",
+    "window_id": 5,
+    "window_start": 68698.065736803,
+    "window_size": 0.1,
+    "syscall_name": "access",
+    "count": 4,
+    "avg_duration": 6.092501280363649e-06,
+    "total_duration": 2.4370005121454597e-05,
+    "success_rate": 0.0,
+    "error_count": 4,
+    "tids_involved": [
+      12176,
+      12177,
+      12174,
+      12175
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12174_access_100041",
+      "12175_access_100136",
+      "12176_access_103667"
+    ]
+  },
+  {
+    "event_id": "summary_5_openat",
+    "event_type": "aggregated_syscall",
+    "window_id": 5,
+    "window_start": 68698.065736803,
+    "window_size": 0.1,
+    "syscall_name": "openat",
+    "count": 833,
+    "avg_duration": 1.4144018231494193e-06,
+    "total_duration": 0.0011781967186834663,
+    "success_rate": 0.9963985594237695,
+    "error_count": 3,
+    "tids_involved": [
+      12174,
+      12175,
+      12176,
+      12177,
+      12178
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12174_openat_100042",
+      "12174_openat_100046",
+      "12175_openat_100137"
+    ]
+  },
+  {
+    "event_id": "summary_5_newfstatat",
+    "event_type": "aggregated_syscall",
+    "window_id": 5,
+    "window_start": 68698.065736803,
+    "window_size": 0.1,
+    "syscall_name": "newfstatat",
+    "count": 299,
+    "avg_duration": 1.1989733233057386e-06,
+    "total_duration": 0.00035849302366841584,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12174,
+      12175,
+      12176,
+      12177,
+      12178
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12174_newfstatat_100043",
+      "12174_newfstatat_100051",
+      "12175_newfstatat_100138"
+    ]
+  },
+  {
+    "event_id": "summary_5_close",
+    "event_type": "aggregated_syscall",
+    "window_id": 5,
+    "window_start": 68698.065736803,
+    "window_size": 0.1,
+    "syscall_name": "close",
+    "count": 839,
+    "avg_duration": 3.953943380373347e-07,
+    "total_duration": 0.0003317358496133238,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12174,
+      12175,
+      12176,
+      12177,
+      12178
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12174_close_100045",
+      "12174_close_100059",
+      "12175_close_100140"
+    ]
+  },
+  {
+    "event_id": "summary_5_read",
+    "event_type": "aggregated_syscall",
+    "window_id": 5,
+    "window_start": 68698.065736803,
+    "window_size": 0.1,
+    "syscall_name": "read",
+    "count": 1007,
+    "avg_duration": 2.040293008387792e-06,
+    "total_duration": 0.002054575059446506,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      1772,
+      12174,
+      12175,
+      12176,
+      12177,
+      3225
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "12174_read_100047",
+      "1772_read_100109",
+      "12175_read_100143"
+    ]
+  },
+  {
+    "event_id": "summary_5_write",
+    "event_type": "aggregated_syscall",
+    "window_id": 5,
+    "window_start": 68698.065736803,
+    "window_size": 0.1,
+    "syscall_name": "write",
+    "count": 49,
+    "avg_duration": 3.3324087817906117e-06,
+    "total_duration": 0.00016328803030773997,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "tids_involved": [
+      12176,
+      1,
+      3225,
+      1772
+    ],
+    "files_accessed": [],
+    "representative_events": [
+      "1772_write_100099",
+      "1772_write_100103",
+      "1772_write_100104"
+    ]
+  }
+]
