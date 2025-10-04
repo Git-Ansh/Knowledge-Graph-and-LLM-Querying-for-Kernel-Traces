@@ -181,10 +181,28 @@ class GraphBuilder:
         """Build the kernel reality layer of the graph."""
         logger.info("Building kernel reality layer")
         
+        # Pre-filter: Only create nodes for entities that participate in the graph
+        logger.info("  Filtering entities for meaningful connectivity...")
+        
+        # Get threads that have EventSequences
+        threads_with_sequences = set(seq.get('thread_id') for seq in entities.get('event_sequences', []))
+        
+        # Get processes that have active threads
+        threads_list = entities.get('threads', [])
+        active_threads = [t for t in threads_list if t.get('tid') in threads_with_sequences]
+        active_process_pids = set(t.get('pid') for t in active_threads)
+        
+        # Filter processes to only those with active threads
+        processes_list = entities.get('processes', [])
+        active_processes = [p for p in processes_list if p.get('pid') in active_process_pids]
+        
+        logger.info(f"    Filtered {len(processes_list)} → {len(active_processes)} processes (with active threads)")
+        logger.info(f"    Filtered {len(threads_list)} → {len(active_threads)} threads (with EventSequences)")
+        
         with self.driver.session() as session:
-            # Create Process nodes
+            # Create Process nodes (only active ones)
             logger.info("  Creating Process nodes")
-            for process in entities.get('processes', []):
+            for process in active_processes:
                 # Ensure all expected fields exist, use None for missing values
                 process_data = {
                     'pid': process.get('pid'),
@@ -210,9 +228,9 @@ class GraphBuilder:
                 self.stats.nodes_created += 1
                 self.stats.node_counts['Process'] = self.stats.node_counts.get('Process', 0) + 1
             
-            # Create Thread nodes
+            # Create Thread nodes (only active ones)
             logger.info("  Creating Thread nodes")
-            for thread in entities.get('threads', []):
+            for thread in active_threads:
                 thread_data = {
                     'tid': thread.get('tid'),
                     'pid': thread.get('pid'),
@@ -292,34 +310,51 @@ class GraphBuilder:
             
             logger.info(f"    Created {created_count} File nodes (skipped {len(entities.get('files', [])) - created_count} unreferenced)")
             
-            # Create Socket nodes
+            # Create Socket nodes - only for sockets referenced in EventSequences
             logger.info("  Creating Socket nodes")
+            
+            # Collect referenced socket_ids from EventSequences
+            referenced_sockets = set()
+            for sequence in entities.get('event_sequences', []):
+                entity_target = sequence.get('entity_target')
+                operation = sequence.get('operation', '')
+                if entity_target and operation in ['socket_send', 'socket_recv', 'socket'] and entity_target.startswith('socket_'):
+                    referenced_sockets.add(entity_target)
+            
+            logger.info(f"    Found {len(referenced_sockets)} sockets referenced in EventSequences")
+            
+            created_socket_count = 0
             for socket in entities.get('sockets', []):
-                socket_data = {
-                    'socket_id': socket.get('socket_id'),
-                    'address': socket.get('address'),
-                    'port': socket.get('port'),
-                    'protocol': socket.get('protocol'),
-                    'family': socket.get('family'),
-                    'type': socket.get('type'),
-                    'first_access': socket.get('first_access')
-                }
-                session.run(
-                    """
-                    CREATE (s:Socket {
-                        socket_id: $socket_id,
-                        address: $address,
-                        port: $port,
-                        protocol: $protocol,
-                        family: $family,
-                        type: $type,
-                        first_access: $first_access
-                    })
-                    """,
-                    **socket_data
-                )
-                self.stats.nodes_created += 1
-                self.stats.node_counts['Socket'] = self.stats.node_counts.get('Socket', 0) + 1
+                socket_id = socket.get('socket_id')
+                if socket_id in referenced_sockets:
+                    socket_data = {
+                        'socket_id': socket_id,
+                        'address': socket.get('address'),
+                        'port': socket.get('port'),
+                        'protocol': socket.get('protocol'),
+                        'family': socket.get('family'),
+                        'type': socket.get('type'),
+                        'first_access': socket.get('first_access')
+                    }
+                    session.run(
+                        """
+                        CREATE (s:Socket {
+                            socket_id: $socket_id,
+                            address: $address,
+                            port: $port,
+                            protocol: $protocol,
+                            family: $family,
+                            type: $type,
+                            first_access: $first_access
+                        })
+                        """,
+                        **socket_data
+                    )
+                    self.stats.nodes_created += 1
+                    self.stats.node_counts['Socket'] = self.stats.node_counts.get('Socket', 0) + 1
+                    created_socket_count += 1
+            
+            logger.info(f"    Created {created_socket_count} Socket nodes (skipped {len(entities.get('sockets', [])) - created_socket_count} unreferenced)")
             
             # Create CPU nodes
             logger.info("  Creating CPU nodes")
@@ -420,9 +455,10 @@ class GraphBuilder:
                 operation = sequence.get('operation', '')
                 
                 if entity_target and not entity_target.startswith('fd:'):
-                    # Determine if this is a socket or file operation
-                    if operation in ['socket_send', 'socket_recv']:
-                        # Try to match with Socket - use socket_id format
+                    # Check if target is a socket_id (starts with 'socket_')
+                    if entity_target.startswith('socket_'):
+                        # Create Socket→EventSequence relationship for ANY operation
+                        # (socket, close, read, write, socket_send, socket_recv)
                         result = session.run(
                             """
                             MATCH (s:Socket {socket_id: $socket_id}), (es:EventSequence {sequence_id: $seq_id})
@@ -435,7 +471,7 @@ class GraphBuilder:
                         if result.single()['count'] > 0:
                             socket_target_count += 1
                     else:
-                        # Try to match with File
+                        # Target is a file path - create File→EventSequence relationship
                         result = session.run(
                             """
                             MATCH (f:File {path: $path}), (es:EventSequence {sequence_id: $seq_id})
@@ -472,38 +508,19 @@ class GraphBuilder:
         """Build Redis-specific application layer."""
         logger.info("  Building Redis application layer")
         
-        # Example: Parse Redis commands from test_commands in metadata
-        test_commands = metadata.get('test_commands', [])
+        # NOTE: AppEvent/RedisCommand creation is DISABLED because:
+        # 1. Metadata only contains command strings, not execution timestamps
+        # 2. Cannot correlate high-level commands to low-level kernel events
+        # 3. Creates isolated nodes with start_time=0.0 that add no value
+        # 
+        # TODO: To enable AppEvent layer, need to either:
+        #   - Capture command execution timestamps during tracing (best solution)
+        #   - Implement heuristic matching based on socket recv/send patterns (risky)
+        #   - Parse application logs with timestamps to correlate events
         
-        with self.driver.session() as session:
-            for idx, command in enumerate(test_commands):
-                # Parse Redis command
-                parts = command.replace('redis-cli ', '').split()
-                if len(parts) >= 1:
-                    cmd_type = parts[0].upper()
-                    
-                    # Create RedisCommand node (inherits from AppEvent)
-                    session.run(
-                        """
-                        CREATE (rc:AppEvent:RedisCommand {
-                            event_name: $event_name,
-                            command: $command,
-                            key: $key,
-                            details: $details,
-                            start_time: $start_time
-                        })
-                        """,
-                        event_name=f"Redis {cmd_type}",
-                        command=cmd_type,
-                        key=parts[1] if len(parts) > 1 else 'unknown',
-                        details=json.dumps({'full_command': command}),
-                        start_time=0.0  # Would need actual timing from trace
-                    )
-                    self.stats.nodes_created += 1
-                    self.stats.node_counts['RedisCommand'] = \
-                        self.stats.node_counts.get('RedisCommand', 0) + 1
-        
-        logger.info(f"    Created {len(test_commands)} RedisCommand nodes")
+        logger.info("    Skipping RedisCommand node creation (no timing correlation)")
+        logger.info("    Reason: test_commands in metadata lack execution timestamps")
+        logger.info("    To enable: modify benchmark_tracer.py to capture command timestamps")
     
     def save_statistics(self, output_dir: Path):
         """Save graph construction statistics."""

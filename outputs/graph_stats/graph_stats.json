@@ -1,19 +1,18 @@
 {
-  "nodes_created": 8330,
-  "relationships_created": 12386,
+  "nodes_created": 8328,
+  "relationships_created": 11681,
   "node_counts": {
-    "Process": 511,
-    "Thread": 894,
-    "File": 65,
-    "Socket": 73,
+    "Process": 51,
+    "Thread": 157,
+    "File": 1249,
+    "Socket": 42,
     "CPU": 6,
-    "EventSequence": 6777,
-    "RedisCommand": 4
+    "EventSequence": 6823
   },
   "relationship_counts": {
-    "CONTAINS": 875,
-    "PERFORMED": 6777,
+    "CONTAINS": 157,
+    "PERFORMED": 6823,
     "SCHEDULED_ON": 157,
-    "WAS_TARGET_OF": 4577
+    "WAS_TARGET_OF": 4544
   }
 }

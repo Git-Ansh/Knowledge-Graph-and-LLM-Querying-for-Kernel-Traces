@@ -1,25 +1,25 @@
 {
-  "start_time": "2025-10-03T21:13:46.594319",
-  "end_time": "2025-10-03T21:15:40.491482",
-  "total_duration_seconds": 113.897163,
+  "start_time": "2025-10-04T19:01:58.053557",
+  "end_time": "2025-10-04T19:04:05.013964",
+  "total_duration_seconds": 126.960407,
   "stages": {
     "parse": {
-      "duration_seconds": 20.355678,
+      "duration_seconds": 22.630146,
       "events_extracted": 2627034,
-      "parse_rate": 129056.5708496666
+      "parse_rate": 116085.59661965945
     },
     "extract": {
-      "duration_seconds": 3.062809,
+      "duration_seconds": 3.264945,
       "entities_extracted": 2827
     },
     "sequences": {
-      "duration_seconds": 3.39195,
-      "sequences_created": 6777
+      "duration_seconds": 3.924996,
+      "sequences_created": 6823
     },
     "graph": {
-      "duration_seconds": 87.085526,
-      "nodes_created": 8330,
-      "relationships_created": 12386
+      "duration_seconds": 97.139541,
+      "nodes_created": 8328,
+      "relationships_created": 11681
     }
   },
   "trace_metadata": {

@@ -1,5 +1,5 @@
 {
-  "total_sequences": 6777,
+  "total_sequences": 6823,
   "operations": {
     "write": 568,
     "read": 762,
@@ -7,9 +7,10 @@
     "socket_recv": 375,
     "close": 4476,
     "open": 301,
-    "mmap": 94
+    "mmap": 94,
+    "socket": 46
   },
-  "total_bytes_transferred": 218840152954219434,
+  "total_bytes_transferred": 218840152954219955,
   "average_durations_ms": {
     "write": 38.78268277290311,
     "read": 22.76015600751859,
@@ -17,6 +18,7 @@
     "socket_recv": 93.79390202097905,
     "close": 0.001780365740056828,
     "open": 2.9823856016460875,
-    "mmap": 7.546451861847519
+    "mmap": 7.546451861847519,
+    "socket": 0.013032195451871856
   }
 }

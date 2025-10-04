@@ -72,6 +72,12 @@ class EventSequenceBuilder:
             'time_gap_ms': 10,
             'immediate': True  # Each open is separate
         },
+        'socket': {
+            'syscalls': ['socket'],
+            'group_by': ['tid'],
+            'time_gap_ms': 10,
+            'immediate': True  # Each socket creation is separate
+        },
         'close': {
             'syscalls': ['close'],
             'group_by': ['tid'],
@@ -107,9 +113,10 @@ class EventSequenceBuilder:
         self.sequences: List[EventSequence] = []
         self.sequence_counter = 0
         
-        # File descriptor tracking: (pid, fd) -> file_path or socket_id
-        # Tracks which fd numbers correspond to which files/sockets per process
-        self.fd_map: Dict[tuple, str] = {}
+        # Time-aware file descriptor tracking: (pid, fd) -> List[(start_time, end_time, path)]
+        # Tracks FD lifecycle with temporal ranges to handle FD reuse correctly
+        # end_time=None means FD is still open
+        self.fd_map: Dict[tuple, List[tuple]] = {}  # (pid, fd) -> [(start, end, path), ...]
         self.fd_mappings_created = 0
         self.fd_mappings_resolved = 0
         self.fd_mappings_cleaned = 0
@@ -318,11 +325,23 @@ class EventSequenceBuilder:
             entity_target = pairs[0]['entry_data']['filename']
         elif pairs[0]['entry_data'].get('pathname'):
             entity_target = pairs[0]['entry_data']['pathname']
+        elif operation == 'socket':
+            # For socket() syscalls, the fd is the return value
+            # The entity_target is the socket_id we stored in fd_map
+            return_val = pairs[0].get('return_value')
+            if return_val is not None and return_val >= 0:
+                pid = pairs[0]['pid']
+                op_time = pairs[0]['start_time']
+                resolved_socket = self._resolve_fd(pid, return_val, op_time)
+                if resolved_socket:
+                    entity_target = resolved_socket
+                    self.fd_mappings_resolved += 1
         elif pairs[0]['entry_data'].get('fd') is not None:
-            # Try to resolve fd to file path
+            # Try to resolve fd to file path or socket_id using operation time
             fd = pairs[0]['entry_data']['fd']
             pid = pairs[0]['pid']
-            resolved_path = self._resolve_fd(pid, fd)
+            op_time = pairs[0]['start_time']  # Use start time of operation
+            resolved_path = self._resolve_fd(pid, fd, op_time)
             if resolved_path:
                 entity_target = resolved_path
                 self.fd_mappings_resolved += 1
@@ -382,11 +401,13 @@ class EventSequenceBuilder:
                     if isinstance(filename, str):
                         filename = filename.strip('"').strip("'")
                     
-                    # Store mapping (don't overwrite if fd is reused)
+                    # Store temporal mapping: (start_time, end_time, path)
                     key = (pid, fd)
                     if key not in self.fd_map:
-                        self.fd_map[key] = filename
-                        self.fd_mappings_created += 1
+                        self.fd_map[key] = []
+                    # Append new mapping with start time, end_time=None (still open)
+                    self.fd_map[key].append((pair['start_time'], None, filename))
+                    self.fd_mappings_created += 1
         
         # Handle socket syscalls - create fd→socket_id mapping
         elif syscall_name == 'socket':
@@ -397,33 +418,55 @@ class EventSequenceBuilder:
                 # Format: socket_<pid>_<timestamp>
                 socket_id = f"socket_{pid}_{pair['start_time']}"
                 
+                # Store temporal mapping: (start_time, end_time, socket_id)
                 key = (pid, fd)
                 if key not in self.fd_map:
-                    self.fd_map[key] = socket_id
-                    self.fd_mappings_created += 1
+                    self.fd_map[key] = []
+                # Append new mapping with start time, end_time=None (still open)
+                self.fd_map[key].append((pair['start_time'], None, socket_id))
+                self.fd_mappings_created += 1
         
-        # Handle close syscalls - track but don't remove mapping
-        # (Keep mappings so we can resolve fds in sequences created later)
+        # Handle close syscalls - mark the active mapping as closed
         elif syscall_name == 'close':
             fd = pair['entry_data'].get('fd')
-            if fd is not None:
+            return_value = pair.get('return_value')
+            # Only mark closed if close succeeded (return value 0)
+            if fd is not None and return_value == 0:
                 key = (pid, fd)
-                if key in self.fd_map:
-                    self.fd_mappings_cleaned += 1
-                    # Don't actually delete - just count for statistics
+                if key in self.fd_map and self.fd_map[key]:
+                    # Find the most recent open mapping (end_time=None)
+                    for i in range(len(self.fd_map[key]) - 1, -1, -1):
+                        start, end, path = self.fd_map[key][i]
+                        if end is None:  # This mapping is still open
+                            # Update it with close time
+                            self.fd_map[key][i] = (start, pair['end_time'], path)
+                            self.fd_mappings_cleaned += 1
+                            break
     
-    def _resolve_fd(self, pid: int, fd: int) -> Optional[str]:
+    def _resolve_fd(self, pid: int, fd: int, op_time: float) -> Optional[str]:
         """
-        Resolve a file descriptor to its file path or socket_id.
+        Resolve a file descriptor to its file path or socket_id at a specific time.
+        Uses temporal FD tracking to handle FD reuse correctly.
         
         Args:
             pid: Process ID
             fd: File descriptor number
+            op_time: Timestamp of the operation using this FD
             
         Returns:
-            File path or socket_id if found, None otherwise
+            File path or socket_id valid at op_time, None if not found
         """
-        return self.fd_map.get((pid, fd))
+        key = (pid, fd)
+        if key not in self.fd_map:
+            return None
+        
+        # Find mapping where: start_time <= op_time <= end_time (or end_time is None)
+        for start_time, end_time, path in self.fd_map[key]:
+            if start_time <= op_time:
+                if end_time is None or op_time <= end_time:
+                    return path
+        
+        return None
     
     def save_sequences(self, output_dir: Path):
         """
