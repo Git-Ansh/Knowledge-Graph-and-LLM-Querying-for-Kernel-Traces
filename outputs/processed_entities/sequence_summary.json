@@ -1,0 +1,22 @@
+{
+  "total_sequences": 6777,
+  "operations": {
+    "write": 568,
+    "read": 762,
+    "socket_send": 201,
+    "socket_recv": 375,
+    "close": 4476,
+    "open": 301,
+    "mmap": 94
+  },
+  "total_bytes_transferred": 218840152954219434,
+  "average_durations_ms": {
+    "write": 38.78268277290311,
+    "read": 22.76015600751859,
+    "socket_send": 70.30162008914202,
+    "socket_recv": 93.79390202097905,
+    "close": 0.001780365740056828,
+    "open": 2.9823856016460875,
+    "mmap": 7.546451861847519
+  }
+}

@@ -1,0 +1,659 @@
+[
+  {
+    "socket_id": "socket_12417_68400.020298274",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.020298274,
+    "type": "526337"
+  },
+  {
+    "socket_id": "socket_12417_68400.020328112",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.020328112,
+    "type": "526337"
+  },
+  {
+    "socket_id": "socket_12417_68400.020475544",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "16",
+    "first_access": 68400.020475544,
+    "type": "524291"
+  },
+  {
+    "socket_id": "socket_12417_68400.021097336",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.021097336,
+    "type": "526337"
+  },
+  {
+    "socket_id": "socket_12417_68400.021192585",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.021192585,
+    "type": "526337"
+  },
+  {
+    "socket_id": "socket_12417_68400.021267513",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.021267513,
+    "type": "526337"
+  },
+  {
+    "socket_id": "socket_12417_68400.021272655",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.021272655,
+    "type": "526337"
+  },
+  {
+    "socket_id": "socket_12417_68400.02780264",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "9",
+    "family": "16",
+    "first_access": 68400.02780264,
+    "type": "3"
+  },
+  {
+    "socket_id": "socket_12417_68400.028204169",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.028204169,
+    "type": "526337"
+  },
+  {
+    "socket_id": "socket_12417_68400.02933342",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "9",
+    "family": "16",
+    "first_access": 68400.02933342,
+    "type": "3"
+  },
+  {
+    "socket_id": "socket_12417_68400.029457506",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.029457506,
+    "type": "524290"
+  },
+  {
+    "socket_id": "socket_12417_68400.029830609",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.029830609,
+    "type": "1"
+  },
+  {
+    "socket_id": "socket_12417_68400.029994754",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "9",
+    "family": "16",
+    "first_access": 68400.029994754,
+    "type": "3"
+  },
+  {
+    "socket_id": "socket_12417_68400.030628468",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "9",
+    "family": "16",
+    "first_access": 68400.030628468,
+    "type": "3"
+  },
+  {
+    "socket_id": "socket_12419_68400.03690332",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.03690332,
+    "type": "526337"
+  },
+  {
+    "socket_id": "socket_5993_68400.07762179",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.07762179,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_5993_68400.07764575",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.07764575,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_5993_68400.113706224",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.113706224,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_5993_68400.113734302",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.113734302,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_812_68400.137555581",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.137555581,
+    "type": "524290"
+  },
+  {
+    "socket_id": "socket_812_68400.14442174",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.14442174,
+    "type": "524290"
+  },
+  {
+    "socket_id": "socket_5993_68400.180290915",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.180290915,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_5993_68400.180309418",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.180309418,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_12417_68400.187659989",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "9",
+    "family": "16",
+    "first_access": 68400.187659989,
+    "type": "3"
+  },
+  {
+    "socket_id": "socket_12417_68400.187719547",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "9",
+    "family": "16",
+    "first_access": 68400.187719547,
+    "type": "3"
+  },
+  {
+    "socket_id": "socket_5993_68400.193822148",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.193822148,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_5993_68400.193843061",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.193843061,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_12426_68400.195402755",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "6",
+    "family": "10",
+    "first_access": 68400.195402755,
+    "type": "1"
+  },
+  {
+    "socket_id": "socket_12426_68400.195435407",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "6",
+    "family": "2",
+    "first_access": 68400.195435407,
+    "type": "1"
+  },
+  {
+    "socket_id": "socket_2631_68400.246951417",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68400.246951417,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_2631_68401.272247492",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68401.272247492,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68401.325960506",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68401.325960506,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68401.325980697",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68401.325980697,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68401.325985226",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68401.325985226,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68401.332346142",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68401.332346142,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68401.332361916",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68401.332361916,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68401.33236528",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68401.33236528,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68401.346238492",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68401.346238492,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68401.346255542",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68401.346255542,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68401.346260319",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68401.346260319,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_12456_68402.197342037",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "6",
+    "family": "2",
+    "first_access": 68402.197342037,
+    "type": "1"
+  },
+  {
+    "socket_id": "socket_1231_68402.235941468",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "2",
+    "first_access": 68402.235941468,
+    "type": "2"
+  },
+  {
+    "socket_id": "socket_2631_68402.300027168",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68402.300027168,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_12468_68402.706067562",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "6",
+    "family": "2",
+    "first_access": 68402.706067562,
+    "type": "1"
+  },
+  {
+    "socket_id": "socket_6007_68402.813545618",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "16",
+    "first_access": 68402.813545618,
+    "type": "524291"
+  },
+  {
+    "socket_id": "socket_6007_68402.813868318",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "2",
+    "first_access": 68402.813868318,
+    "type": "526338"
+  },
+  {
+    "socket_id": "socket_542_68402.814321999",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "2",
+    "first_access": 68402.814321999,
+    "type": "526338"
+  },
+  {
+    "socket_id": "socket_5993_68402.845655785",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "2",
+    "first_access": 68402.845655785,
+    "type": "526337"
+  },
+  {
+    "socket_id": "socket_12469_68403.213074506",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "6",
+    "family": "2",
+    "first_access": 68403.213074506,
+    "type": "1"
+  },
+  {
+    "socket_id": "socket_2631_68403.318830863",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68403.318830863,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_12470_68403.718226288",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "6",
+    "family": "2",
+    "first_access": 68403.718226288,
+    "type": "1"
+  },
+  {
+    "socket_id": "socket_2631_68404.344561955",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68404.344561955,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_2631_68405.367469714",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68405.367469714,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_534_68405.481953277",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68405.481953277,
+    "type": "524290"
+  },
+  {
+    "socket_id": "socket_3753_68406.328120298",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68406.328120298,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68406.328148101",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68406.328148101,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68406.328152868",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68406.328152868,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68406.333650899",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68406.333650899,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68406.333663455",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68406.333663455,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68406.33366674",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68406.33366674,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68406.345218627",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68406.345218627,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68406.345232338",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68406.345232338,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_3753_68406.345236865",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68406.345236865,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_2631_68406.39198558",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68406.39198558,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_1231_68407.237605229",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "2",
+    "first_access": 68407.237605229,
+    "type": "2"
+  },
+  {
+    "socket_id": "socket_2631_68407.415019532",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68407.415019532,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_2631_68408.439942772",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68408.439942772,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_2631_68409.467295088",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68409.467295088,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_2631_68410.493342331",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68410.493342331,
+    "type": "524289"
+  },
+  {
+    "socket_id": "socket_6007_68411.280498716",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "16",
+    "first_access": 68411.280498716,
+    "type": "524291"
+  },
+  {
+    "socket_id": "socket_6007_68411.280616628",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "2",
+    "first_access": 68411.280616628,
+    "type": "526338"
+  },
+  {
+    "socket_id": "socket_12496_68411.281325715",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "1",
+    "first_access": 68411.281325715,
+    "type": "1"
+  },
+  {
+    "socket_id": "socket_542_68411.281333181",
+    "address": "0.0.0.0",
+    "port": 0,
+    "protocol": "0",
+    "family": "2",
+    "first_access": 68411.281333181,
+    "type": "526338"
+  }
+]

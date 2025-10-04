@@ -1,0 +1,179 @@
+{
+  "schema_version": "2.0",
+  "schema_type": "layered_knowledge_graph",
+  "description": "Layered knowledge graph schema separating kernel reality from application abstraction",
+  
+  "layers": {
+    "kernel_reality": {
+      "description": "Ground truth of OS operations - universal and application-agnostic",
+      "nodes": ["Process", "Thread", "File", "Socket", "CPU", "EventSequence"],
+      "relationships": ["CONTAINS", "PERFORMED", "WAS_TARGET_OF", "FOLLOWS", "SCHEDULED_ON"]
+    },
+    "application_abstraction": {
+      "description": "Logical operations and semantic context - application-specific",
+      "nodes": ["AppEvent", "RedisCommand", "HttpRequest", "SqlQuery"],
+      "relationships": ["INITIATED", "FULFILLED_BY"]
+    }
+  },
+  
+  "node_definitions": {
+    "Process": {
+      "layer": "kernel_reality",
+      "description": "Operating system process",
+      "required_properties": ["pid", "name", "start_time"],
+      "optional_properties": ["cmdline", "parent_pid", "uid", "gid", "end_time"]
+    },
+    "Thread": {
+      "layer": "kernel_reality",
+      "description": "Execution thread within a process",
+      "required_properties": ["tid", "pid", "start_time"],
+      "optional_properties": ["name", "priority", "cpu_affinity"]
+    },
+    "File": {
+      "layer": "kernel_reality",
+      "description": "File system resource",
+      "required_properties": ["path", "type"],
+      "optional_properties": ["inode", "permissions", "size", "device"]
+    },
+    "Socket": {
+      "layer": "kernel_reality",
+      "description": "Network socket endpoint",
+      "required_properties": ["address", "port", "protocol"],
+      "optional_properties": ["family", "type", "state", "remote_address", "remote_port"]
+    },
+    "CPU": {
+      "layer": "kernel_reality",
+      "description": "Processor core",
+      "required_properties": ["cpu_id"],
+      "optional_properties": ["frequency", "utilization"]
+    },
+    "EventSequence": {
+      "layer": "kernel_reality",
+      "description": "Ordered sequence of kernel events representing a complete logical operation",
+      "required_properties": ["operation", "start_time", "end_time", "count", "event_stream"],
+      "optional_properties": ["entity_target", "return_value", "duration_ms", "bytes_transferred"]
+    },
+    "AppEvent": {
+      "layer": "application_abstraction",
+      "description": "Generic application-level event",
+      "required_properties": ["event_name", "start_time"],
+      "optional_properties": ["end_time", "details", "status"]
+    },
+    "RedisCommand": {
+      "layer": "application_abstraction",
+      "description": "Redis database command",
+      "extends": "AppEvent",
+      "required_properties": ["command", "key"],
+      "optional_properties": ["value", "value_size", "client_ip", "result"]
+    },
+    "HttpRequest": {
+      "layer": "application_abstraction",
+      "description": "HTTP request event",
+      "extends": "AppEvent",
+      "required_properties": ["method", "uri"],
+      "optional_properties": ["status_code", "response_size", "user_agent", "client_ip"]
+    },
+    "SqlQuery": {
+      "layer": "application_abstraction",
+      "description": "SQL database query",
+      "extends": "AppEvent",
+      "required_properties": ["query_type", "query_text"],
+      "optional_properties": ["rows_affected", "execution_time", "database", "table"]
+    }
+  },
+  
+  "relationship_definitions": {
+    "CONTAINS": {
+      "layer": "kernel_reality",
+      "description": "Parent contains child entity",
+      "source": "Process",
+      "target": "Thread",
+      "properties": ["creation_time"]
+    },
+    "PERFORMED": {
+      "layer": "kernel_reality",
+      "description": "Thread performed an event sequence",
+      "source": "Thread",
+      "target": "EventSequence",
+      "properties": ["start_time", "end_time", "cpu"]
+    },
+    "WAS_TARGET_OF": {
+      "layer": "kernel_reality",
+      "description": "Resource was target of event sequence",
+      "source": ["File", "Socket"],
+      "target": "EventSequence",
+      "properties": ["access_type"]
+    },
+    "FOLLOWS": {
+      "layer": "kernel_reality",
+      "description": "Temporal ordering between event sequences",
+      "source": "EventSequence",
+      "target": "EventSequence",
+      "properties": ["time_delta"]
+    },
+    "SCHEDULED_ON": {
+      "layer": "kernel_reality",
+      "description": "Thread scheduled on CPU",
+      "source": "Thread",
+      "target": "CPU",
+      "properties": ["timestamp", "duration"]
+    },
+    "INITIATED": {
+      "layer": "application_abstraction",
+      "description": "Thread initiated application event",
+      "source": "Thread",
+      "target": "AppEvent",
+      "properties": ["timestamp"]
+    },
+    "FULFILLED_BY": {
+      "layer": "cross_layer",
+      "description": "Application event fulfilled by kernel event sequences",
+      "source": "AppEvent",
+      "target": "EventSequence",
+      "properties": ["correlation_confidence"]
+    }
+  },
+  
+  "processing_rules": {
+    "event_grouping": {
+      "description": "Rules for grouping individual kernel events into EventSequence nodes",
+      "rules": [
+        {
+          "operation": "read",
+          "syscalls": ["read", "pread64", "readv", "preadv"],
+          "group_by": ["tid", "fd"],
+          "break_on": ["time_gap_ms > 100", "different_fd"]
+        },
+        {
+          "operation": "write",
+          "syscalls": ["write", "pwrite64", "writev", "pwritev"],
+          "group_by": ["tid", "fd"],
+          "break_on": ["time_gap_ms > 100", "different_fd"]
+        },
+        {
+          "operation": "open",
+          "syscalls": ["open", "openat", "openat2"],
+          "group_by": ["tid", "path"],
+          "break_on": ["immediate"]
+        },
+        {
+          "operation": "socket_send",
+          "syscalls": ["send", "sendto", "sendmsg", "sendmmsg"],
+          "group_by": ["tid", "socket_fd"],
+          "break_on": ["time_gap_ms > 50", "different_socket"]
+        },
+        {
+          "operation": "socket_recv",
+          "syscalls": ["recv", "recvfrom", "recvmsg", "recvmmsg"],
+          "group_by": ["tid", "socket_fd"],
+          "break_on": ["time_gap_ms > 50", "different_socket"]
+        }
+      ]
+    },
+    "correlation_rules": {
+      "description": "Rules for correlating application events with kernel sequences",
+      "time_window_ms": 1000,
+      "confidence_threshold": 0.7
+    }
+  }
+}

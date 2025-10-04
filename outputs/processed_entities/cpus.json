@@ -1,0 +1,26 @@
+[
+  {
+    "cpu_id": 2,
+    "event_count": 473829
+  },
+  {
+    "cpu_id": 0,
+    "event_count": 456386
+  },
+  {
+    "cpu_id": 1,
+    "event_count": 249473
+  },
+  {
+    "cpu_id": 5,
+    "event_count": 506436
+  },
+  {
+    "cpu_id": 4,
+    "event_count": 440771
+  },
+  {
+    "cpu_id": 3,
+    "event_count": 500139
+  }
+]

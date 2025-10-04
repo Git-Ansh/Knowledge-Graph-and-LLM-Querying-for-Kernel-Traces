@@ -1,0 +1,54 @@
+{
+  "start_time": "2025-10-03T21:13:46.594319",
+  "end_time": "2025-10-03T21:15:40.491482",
+  "total_duration_seconds": 113.897163,
+  "stages": {
+    "parse": {
+      "duration_seconds": 20.355678,
+      "events_extracted": 2627034,
+      "parse_rate": 129056.5708496666
+    },
+    "extract": {
+      "duration_seconds": 3.062809,
+      "entities_extracted": 2827
+    },
+    "sequences": {
+      "duration_seconds": 3.39195,
+      "sequences_created": 6777
+    },
+    "graph": {
+      "duration_seconds": 87.085526,
+      "nodes_created": 8330,
+      "relationships_created": 12386
+    }
+  },
+  "trace_metadata": {
+    "application": "redis",
+    "session_name": "app_redis_20251003_185958",
+    "timestamp": "20251003_185958",
+    "command": [
+      "redis-server",
+      "--daemonize",
+      "no"
+    ],
+    "description": "Trace Redis to capture complete event sequences for KG construction.",
+    "trace_duration": null,
+    "start_time": "2025-10-03T18:59:58.921449",
+    "setup_commands": [
+      "sudo",
+      "systemctl",
+      "stop",
+      "redis"
+    ],
+    "test_commands": [
+      "redis-cli ping",
+      "redis-cli set test_key 'hello_world'",
+      "redis-cli get test_key",
+      "redis-cli del test_key"
+    ],
+    "success": true,
+    "execution_time": 9.208314180374146,
+    "return_code": 0,
+    "end_time": "2025-10-03T19:00:20.617158"
+  }
+}

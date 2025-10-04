@@ -1,0 +1,19 @@
+{
+  "total_events": 2627034,
+  "entity_counts": {
+    "processes": 511,
+    "threads": 894,
+    "files": 1343,
+    "sockets": 73,
+    "cpus": 6
+  },
+  "extraction_metadata": {
+    "time_range": {
+      "start": 68399.987220268,
+      "end": 68411.281549856,
+      "duration": 11.29432958799589
+    },
+    "unique_pids": 511,
+    "unique_tids": 894
+  }
+}

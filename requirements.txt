@@ -1,0 +1,15 @@
+# Knowledge Graph and LLM Querying for Kernel Traces
+# Python Dependencies
+
+# Neo4j Python driver for graph database connectivity
+neo4j>=5.0.0
+
+# Standard library modules (included with Python 3.8+)
+# - logging
+# - json
+# - pathlib
+# - dataclasses
+# - collections
+# - argparse
+# - datetime
+# - typing

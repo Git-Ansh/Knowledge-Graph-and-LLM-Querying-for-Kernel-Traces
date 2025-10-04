@@ -2,193 +2,422 @@
 
 ## Project Overview  
 
-A unified system for capturing, analyzing, and querying Linux kernel traces using knowledge graphs and Large Language Models with **100% relationship type compliance**.
+A layered knowledge graph system for capturing, analyzing, and querying Linux kernel traces using a universal schema that separates kernel reality from application abstraction.
 
-### Key Achievements
-- **Universal Data Processor** - Schema-aware processing with 100% compliance target
-- **Enhanced LTTng Tracing** - Comprehensive syscall coverage for maximum data quality  
-- **Dynamic Schema Selection** - Auto-detects applications (Redis, PostgreSQL, Universal)
-- **Complete Pipeline Integration** - End-to-end logs → processor → builder → graph
-- **Data Integrity Validation** - 100% verification of trace consistency
-- **High Performance** - >1000 lines/sec processing with real-time quality metrics
+### Core Architecture: Layered Knowledge Graph
 
-### Architecture Overview
+This system implements a two-layer graph model:
+
+**1. Kernel Reality Layer** - The ground truth of OS operations
+- Nodes: Process, Thread, File, Socket, CPU, EventSequence
+- Universal and application-agnostic
+- Represents physical kernel operations
+
+**2. Application Abstraction Layer** - Logical application operations
+- Nodes: AppEvent, RedisCommand, HttpRequest, SqlQuery
+- Application-specific semantic context
+- Represents why kernel operations occurred
+
+**Cross-Layer Connection** - FULFILLED_BY relationships link application events to the kernel sequences that implement them.
+
+### Key Features
+- **Universal Schema** - Works across any traced application
+- **Event Sequence Model** - Groups related syscalls into logical operations
+- **Temporal & Causal Preservation** - Complete ordering and relationships
+- **Scalable Processing** - Handles large traces efficiently
+- **Clean Separation** - Actors (nodes) separate from actions (EventSequence nodes)
+
+### Pipeline Architecture
 ```
-Raw LTTng Traces → Schema Detection → Universal Processing → Graph Construction → Validation
+Raw LTTng Trace → Parse Events → Extract Entities → Build Sequences → Construct Graph
                                                                     
-   Enhanced        Auto-select      100% Compliance     Neo4j Graph    Data Integrity  
-   Syscall         Redis/Universal   Relationship       Construction    100% Verified
-   Coverage        Schema           Extraction
+   trace_output     KernelEvents    Processes       EventSequence    Neo4j Layered
+   .txt file        structured      Threads         action nodes     Knowledge Graph
+                    events          Files                            (2 layers)
 ```
 
 ##  Quick Start
 
 ### Complete Pipeline Execution
 ```bash
-# Run the complete analysis pipeline
+# Process the latest trace and build knowledge graph
 python3 main.py
 
-# Run individual steps
-python3 main.py --step preprocess    # Data processing only
-python3 main.py --step graph         # Graph building only  
-python3 main.py --step analyze       # Analysis only
+# Process a specific trace directory
+python3 main.py --trace traces/redis_20251003_185958
+
+# Enable verbose logging to see detailed processing steps
+python3 main.py --verbose
+
+# Use custom Neo4j credentials
+python3 main.py --neo4j-password your_password
 ```
 
-### Benchmark Tracing
+### Capture New Traces
 ```bash
-# List available benchmarks
-python3 benchmarks/benchmark_tracer.py --list
+# List available benchmark applications
+cd benchmarks
+python3 benchmark_tracer.py --list
 
-# Capture traces for specific benchmarks
-sudo python3 benchmarks/benchmark_tracer.py file_io
-sudo python3 benchmarks/benchmark_tracer.py cpu_intensive
+# Capture Redis trace (requires sudo for kernel tracing)
+sudo python3 benchmark_tracer.py redis
 
-# Trace custom applications
-sudo python3 benchmarks/benchmark_tracer.py --custom "ls -la /usr/bin"
+# The latest trace is automatically symlinked at traces/latest
+cd ..
+python3 main.py  # Process the latest trace
 ```
 
 ##  Project Structure
 
 ```
 Knowledge Graph and LLM Querying for Kernel Traces/
- main.py                    # Main pipeline orchestrator
- src/                       # Core processing components
-    lttng_data_preprocessor.py    # Trace parsing & entity extraction
-    universal_graph_builder.py    # Neo4j graph construction
-    universal_trace_analyzer.py   # Advanced analytics engine
-    schema_config_manager.py      # Schema management system
- benchmarks/                # LTTng tracing utilities
-    benchmark_tracer.py          # Automated benchmark tracing
-    README.md                     # Benchmarking documentation
- schemas/                   # Graph schema definitions
-    kernel_trace_schema.cypher    # Universal kernel schema
-    *.json                       # Schema configurations
- schema_outputs/            # Processing artifacts
-    processed_entities/          # Extracted trace entities
- observations/              # Analysis results
-    analysis_summary.json        # Latest analysis results
-    TraceMain.txt                 # Input trace data
-    *.md                         # Analysis documentation
- traces/                    # Captured LTTng traces
-     latest/                      # Symlink to most recent trace
-     {benchmark}_{timestamp}/     # Individual trace sessions
+├── main.py                         # Pipeline orchestrator
+├── src/                            # Core pipeline modules
+│   ├── trace_parser.py            # Stage 1: Parse raw LTTng traces
+│   ├── entity_extractor.py        # Stage 2: Extract kernel entities
+│   ├── event_sequence_builder.py  # Stage 3: Build EventSequence nodes
+│   └── graph_builder.py           # Stage 4: Construct Neo4j graph
+├── schemas/                        # Schema definitions
+│   └── layered_schema.json        # Layered graph schema specification
+├── benchmarks/                     # LTTng tracing utilities
+│   ├── benchmark_tracer.py        # Automated trace capture
+│   └── README.md                  # Tracing documentation
+├── traces/                         # Captured LTTng traces
+│   ├── latest/                    # Symlink to most recent trace
+│   └── {app}_{timestamp}/         # Individual trace sessions
+│       ├── trace_output.txt       # Raw LTTng output
+│       ├── metadata.json          # Trace metadata
+│       └── kernel/                # Binary trace data
+├── outputs/                        # Processing outputs
+│   ├── processed_entities/        # Extracted entities (JSON)
+│   │   ├── processes.json
+│   │   ├── threads.json
+│   │   ├── files.json
+│   │   ├── sockets.json
+│   │   ├── cpus.json
+│   │   └── event_sequences.json
+│   └── graph_stats/               # Graph construction statistics
+│       ├── graph_stats.json
+│       └── pipeline_summary.json
+├── README.md                       # This file
+├── SCHEMA.md                       # Detailed schema documentation
+└── Project-Log.md                  # Development log
 ```
 
 ##  System Architecture
 
-### 3-Stage Pipeline
+### 4-Stage Pipeline
 
-1. **Data Processing** (`src/lttng_data_preprocessor.py`)
-   - Parse raw LTTng kernel traces
-   - Extract system entities (processes, threads, files, syscalls)
-   - Generate structured JSON outputs
+**Stage 1: Trace Parsing** (`trace_parser.py`)
+- Parse raw LTTng kernel trace output
+- Extract individual kernel events with timestamps
+- Standardize event format across different trace formats
+- Handle syscall entry/exit events
 
-2. **Knowledge Graph Construction** (`src/universal_graph_builder.py`) 
-   - Build Neo4j property graph from entities
-   - Apply universal kernel trace schema
-   - Create optimized indexes and constraints
+**Stage 2: Entity Extraction** (`entity_extractor.py`)
+- Build "actor" nodes: Process, Thread, File, Socket, CPU
+- Track entity lifecycles (creation/termination)
+- Establish parent-child relationships
+- Create kernel reality layer foundation
 
-3. **Advanced Analytics** (`src/universal_trace_analyzer.py`)
-   - Multi-dimensional system analysis
-   - Performance metrics and bottleneck identification
-   - Cross-process communication patterns
+**Stage 3: Event Sequence Building** (`event_sequence_builder.py`)
+- Group related syscalls into logical operations
+- Create EventSequence "action" nodes with complete event streams
+- Apply schema-defined grouping rules (time gaps, operation types)
+- Preserve temporal ordering and causality
+
+**Stage 4: Graph Construction** (`graph_builder.py`)
+- Build Neo4j knowledge graph with both layers
+- Create kernel reality layer (CONTAINS, PERFORMED, WAS_TARGET_OF)
+- Create application abstraction layer (INITIATED, FULFILLED_BY)
+- Apply constraints and indexes for query performance
+
+### Layered Graph Model
+
+The knowledge graph separates concerns into two interconnected layers:
+
+**Kernel Reality Layer** (Universal)
+```
+(Process)-[:CONTAINS]->(Thread)-[:PERFORMED]->(EventSequence)<-[:WAS_TARGET_OF]-(File)
+```
+- Represents what actually happened at the kernel level
+- Works for any traced application
+- EventSequence nodes contain complete event streams
+
+**Application Abstraction Layer** (Application-Specific)
+```
+(Thread)-[:INITIATED]->(AppEvent:RedisCommand)-[:FULFILLED_BY]->(EventSequence)
+```
+- Represents why operations occurred
+- Provides semantic application context
+- Links to kernel reality via FULFILLED_BY relationships
 
 ### Key Capabilities
 
-- **557 Graph Nodes**: Comprehensive system representation
-- **1,927 Relationships**: Rich behavioral modeling  
-- **480 Syscall Events**: Detailed kernel interaction tracking
-- **49 Syscall Types**: Complete system call coverage
-- **Multi-CPU Analysis**: 4-core workload distribution
-- **Temporal Analysis**: Event sequencing and causality
+- **Complete Event Preservation**: EventSequence nodes store full event streams
+- **Multi-Application Support**: Universal kernel layer + pluggable application layers
+- **Temporal Analysis**: Preserved timestamps enable time-series queries
+- **Causal Tracking**: Relationships capture operation dependencies
+- **Scalable Design**: Efficient grouping reduces graph size while preserving detail
 
-##  Analysis Results
+##  Prerequisites
 
-The system provides detailed insights into:
-
-### **Performance Hotspots**
-- CPU utilization patterns across cores
-- Syscall latency analysis (ioctl, futex, write operations)
-- Thread execution patterns and timespans
-
-### **System Behavior** 
-- Multi-process coordination and synchronization
-- File I/O patterns and access behaviors
-- Network communication analysis
-
-### **Error Analysis**
-- Syscall failure patterns and error codes
-- Resource contention identification
-- System bottleneck detection
-
-##  Technical Requirements
-
-### Environment
-- **OS**: Ubuntu 22.04 LTS (recommended)
-- **Python**: 3.8+ with neo4j, pandas, numpy
-- **Database**: Neo4j 4.0+
-- **Tracing**: LTTng tools with kernel modules
+### System Requirements
+- **OS**: Ubuntu 22.04 LTS or similar Linux distribution
+- **Python**: 3.8 or higher
+- **Neo4j**: 4.0 or higher (Community or Enterprise)
+- **LTTng**: lttng-tools 2.12+ with kernel modules
 
 ### Installation
-```bash
-# Python dependencies
-pip install neo4j pandas numpy
 
-# LTTng kernel tracing
+#### 1. Python Dependencies
+```bash
+pip3 install -r requirements.txt
+```
+
+#### 2. LTTng Kernel Tracing
+```bash
+sudo apt update
 sudo apt install lttng-tools lttng-modules-dkms babeltrace2
-
-# Neo4j database setup
-# See: https://neo4j.com/docs/operations-manual/current/installation/
 ```
 
-### Permissions
-- **Root access** required for kernel-level LTTng tracing
-- **Neo4j credentials** configured in source files (default: neo4j/sudoroot)
-
-##  Usage Examples
-
-### Complete Workflow
+#### 3. Neo4j Database
 ```bash
-# 1. Capture new benchmark trace
-sudo python3 benchmarks/benchmark_tracer.py network
+# Install Neo4j (see official docs for latest version)
+wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
+echo 'deb https://debian.neo4j.com stable latest' | sudo tee /etc/apt/sources.list.d/neo4j.list
+sudo apt update
+sudo apt install neo4j
 
-# 2. Copy to analysis input
-cp traces/latest/trace_output.txt observations/TraceMain.txt
+# Start Neo4j
+sudo systemctl enable neo4j
+sudo systemctl start neo4j
 
-# 3. Run complete pipeline
-python3 main.py
-
-# 4. Review results
-cat observations/analysis_summary.json
+# Set initial password (default user: neo4j)
+# Navigate to http://localhost:7474 and set password
 ```
 
-### Individual Components
+#### 4. Configuration
+Update Neo4j credentials in main.py or use command-line arguments:
 ```bash
-# Process existing trace data
-python3 main.py --step preprocess
+python3 main.py --neo4j-password your_password
+```
 
-# Build graph with custom schema  
-python3 main.py --step graph --schema custom_kernel
+##  Complete Workflow Example
 
-# Analysis with different database
-python3 main.py --step analyze
+### 1. Capture a Trace
+```bash
+cd benchmarks
+sudo python3 benchmark_tracer.py redis
+```
+
+This will:
+- Start LTTng tracing session
+- Launch Redis server
+- Execute test workload (SET/GET commands)
+- Stop tracing and save output
+- Create symlink at `traces/latest`
+
+### 2. Process Trace and Build Graph
+```bash
+cd ..
+python3 main.py --verbose
+```
+
+This executes the complete 4-stage pipeline:
+- **Stage 1**: Parse 50MB+ trace file
+- **Stage 2**: Extract processes, threads, files, sockets
+- **Stage 3**: Build EventSequence nodes
+- **Stage 4**: Construct Neo4j knowledge graph
+
+### 3. Query the Graph
+```bash
+# Open Neo4j Browser at http://localhost:7474
+
+# Example queries:
+
+# View all processes and their threads
+MATCH (p:Process)-[:CONTAINS]->(t:Thread)
+RETURN p.name, count(t) as thread_count
+ORDER BY thread_count DESC
+
+# Find expensive operations
+MATCH (es:EventSequence)
+WHERE es.duration_ms > 10
+RETURN es.operation, es.duration_ms, es.count
+ORDER BY es.duration_ms DESC
+LIMIT 10
+
+# Trace Redis commands to kernel operations
+MATCH (rc:RedisCommand)-[:FULFILLED_BY]->(es:EventSequence)
+RETURN rc.command, rc.key, es.operation, es.bytes_transferred
+
+# Analyze file access patterns
+MATCH (f:File)<-[:WAS_TARGET_OF]-(es:EventSequence)
+RETURN f.path, count(es) as access_count, 
+       sum(es.bytes_transferred) as total_bytes
+ORDER BY access_count DESC
+```
+
+##  Output Files
+
+After pipeline execution, check:
+
+- **outputs/processed_entities/** - JSON files with extracted entities
+- **outputs/graph_stats/** - Graph construction statistics
+- **pipeline.log** - Detailed execution log
+
+Example output structure:
+```
+outputs/
+├── processed_entities/
+│   ├── processes.json         # 15 processes extracted
+│   ├── threads.json           # 23 threads extracted
+│   ├── files.json            # 45 files accessed
+│   ├── event_sequences.json  # 234 sequences created
+│   └── extraction_summary.json
+└── graph_stats/
+    ├── graph_stats.json       # Node/relationship counts
+    └── pipeline_summary.json  # Timing and performance
 ```
 
 ##  Research Applications
 
-### System Diagnostics
-- **Performance bottleneck identification**
-- **Resource utilization optimization** 
-- **Multi-threading analysis**
-- **I/O pattern characterization**
+### System Analysis
+- **Performance Profiling**: Identify bottlenecks through EventSequence duration analysis
+- **Resource Utilization**: Track file/socket access patterns across processes
+- **Concurrency Analysis**: Study thread interactions and synchronization patterns
+- **I/O Characterization**: Analyze read/write patterns and data transfer volumes
 
-### Security Analysis
-- **Syscall behavior profiling**
-- **Process interaction mapping**
-- **Anomaly detection foundations**
+### Application Understanding
+- **Behavioral Modeling**: Link high-level operations to kernel implementations
+- **Dependency Mapping**: Trace which files/resources applications access
+- **Workload Analysis**: Understand application-kernel interaction patterns
+- **Performance Tuning**: Identify optimization opportunities through causal analysis
 
-### Academic Research
-- **Kernel behavior modeling**
+### Cross-Layer Queries
+The FULFILLED_BY relationship enables powerful queries bridging application semantics and kernel reality:
+
+```cypher
+// How many syscalls does a Redis GET take?
+MATCH (rc:RedisCommand {command: 'GET'})-[:FULFILLED_BY]->(es:EventSequence)
+RETURN rc.key, sum(es.count) as total_syscalls, 
+       sum(es.duration_ms) as total_time_ms
+
+// What files does an HTTP request access?
+MATCH (http:HttpRequest)-[:FULFILLED_BY]->(es:EventSequence)
+      -[:WAS_TARGET_OF]-(f:File)
+RETURN http.uri, collect(DISTINCT f.path) as files_accessed
+```
+
+##  Troubleshooting
+
+### Common Issues
+
+**1. Neo4j Connection Failed**
+```bash
+# Check Neo4j status
+sudo systemctl status neo4j
+
+# Restart Neo4j
+sudo systemctl restart neo4j
+
+# Verify correct password
+python3 main.py --neo4j-password your_actual_password
+```
+
+**2. LTTng Permission Denied**
+```bash
+# Must run tracing with sudo
+sudo python3 benchmarks/benchmark_tracer.py redis
+
+# Check lttng-modules are loaded
+lsmod | grep lttng
+```
+
+**3. Large Trace Files**
+Traces can be 50MB-500MB. If parsing is slow:
+- Use `--verbose` to monitor progress
+- Ensure sufficient disk space in outputs/
+- Consider trace filtering in LTTng
+
+**4. Memory Issues**
+For very large traces (>1M events):
+- Increase Python memory limit
+- Process in batches (future enhancement)
+- Use streaming mode (future enhancement)
+
+##  Development Notes
+
+### Code Organization
+- **No emoji in code or logs** - Professional output only
+- **Medium verbosity** - INFO level shows major steps, DEBUG for details
+- **Meaningful naming** - Descriptive variable and function names
+- **Separation of concerns** - Each module has single responsibility
+
+### Extending the System
+
+**Add New Application Type:**
+1. Define schema in `schemas/layered_schema.json`
+2. Create parser in `src/myapp_parser.py`
+3. Add builder method in `src/graph_builder.py`
+4. Update documentation
+
+**Add New Kernel Entity:**
+1. Define dataclass in `entity_extractor.py`
+2. Add extraction logic for new entity type
+3. Update schema with node definition
+4. Add graph creation in `graph_builder.py`
+
+##  Project Status
+
+**Current Version**: 2.0 (Layered Architecture)
+
+**Implemented:**
+- 4-stage pipeline (parse → extract → sequence → graph)
+- Layered knowledge graph architecture
+- EventSequence aggregation model
+- Universal kernel reality layer
+- Redis application layer (basic)
+- Complete trace parsing and entity extraction
+- Neo4j graph construction
+- Command-line orchestrator
+
+**In Progress:**
+- Enhanced application layer parsers (Apache, PostgreSQL)
+- LLM query interface for natural language queries
+- Advanced correlation algorithms for FULFILLED_BY
+- Real-time streaming mode
+
+**Roadmap:**
+- Query interface with natural language processing
+- Machine learning for event correlation
+- Multi-trace comparison and diff analysis
+- Web-based visualization dashboard
+- eBPF trace support in addition to LTTng
+
+##  Contributing
+
+This is an active research project. Contributions welcome in:
+- Application-specific parsers
+- Query optimization
+- Visualization tools
+- Documentation improvements
+
+##  License
+
+[Specify your license here]
+
+##  References
+
+See `Project-Log.md` for detailed development history and technical decisions.
+
+See `SCHEMA.md` for complete schema documentation with examples.
+
+---
+
+**Author**: Knowledge Graph and LLM Querying for Kernel Traces Project  
+**Last Updated**: October 3, 2025
 - **System performance characterization**
 - **Trace-driven analysis methodologies**
 
