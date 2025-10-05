@@ -1,19 +1,19 @@
 {
-  "total_events": 2627034,
+  "total_events": 5123563,
   "entity_counts": {
-    "processes": 511,
-    "threads": 894,
-    "files": 1343,
-    "sockets": 73,
+    "processes": 505,
+    "threads": 892,
+    "files": 1340,
+    "sockets": 99,
     "cpus": 6
   },
   "extraction_metadata": {
     "time_range": {
-      "start": 68399.987220268,
-      "end": 68411.281549856,
-      "duration": 11.29432958799589
+      "start": 76325.507364513,
+      "end": 76340.723438596,
+      "duration": 15.216074083000422
     },
-    "unique_pids": 511,
-    "unique_tids": 894
+    "unique_pids": 505,
+    "unique_tids": 892
   }
 }

@@ -101,13 +101,14 @@ class EventSequenceBuilder:
         }
     }
     
-    def __init__(self, events: List[KernelEvent], schema_config: Optional[Dict] = None):
+    def __init__(self, events: List[KernelEvent], schema_config: Optional[Dict] = None, trace_dir: Optional[Path] = None):
         """
         Initialize event sequence builder.
         
         Args:
             events: List of parsed kernel events
             schema_config: Optional schema configuration for grouping rules
+            trace_dir: Optional path to trace directory (for loading initial FD state)
         """
         self.events = events
         self.sequences: List[EventSequence] = []
@@ -120,10 +121,15 @@ class EventSequenceBuilder:
         self.fd_mappings_created = 0
         self.fd_mappings_resolved = 0
         self.fd_mappings_cleaned = 0
+        self.fd_mappings_from_lsof = 0
         
         # Load grouping rules from schema if provided
         if schema_config and 'processing_rules' in schema_config:
             self._load_schema_rules(schema_config['processing_rules'])
+        
+        # Load initial FD state from lsof if available
+        if trace_dir:
+            self._load_initial_fd_state(trace_dir)
         
         logger.info(f"Initialized EventSequenceBuilder with {len(events)} events")
     
@@ -140,6 +146,100 @@ class EventSequenceBuilder:
                     'group_by': rule['group_by'],
                     'time_gap_ms': 100  # Default
                 }
+    
+    def _parse_lsof_output(self, raw_output: str) -> Dict[tuple, str]:
+        """
+        Parse lsof -Fn output format into FD mappings.
+        
+        Format:
+            p<PID>      - Process ID
+            f<FD>       - File descriptor number
+            n<NAME>     - File/socket name
+        
+        Args:
+            raw_output: Raw lsof -Fn output
+            
+        Returns:
+            Dict mapping (pid, fd) -> file_path/socket_name
+        """
+        fd_mappings = {}
+        current_pid = None
+        current_fd = None
+        
+        for line in raw_output.split('\n'):
+            line = line.strip()
+            if not line:
+                continue
+            
+            if line.startswith('p'):
+                # Process ID
+                try:
+                    current_pid = int(line[1:])
+                except ValueError:
+                    logger.debug(f"Could not parse PID from: {line}")
+                    current_pid = None
+            
+            elif line.startswith('f'):
+                # File descriptor - only numeric FDs
+                fd_str = line[1:]
+                try:
+                    current_fd = int(fd_str)
+                except ValueError:
+                    # Skip non-numeric FDs (cwd, txt, mem, rtd, etc.)
+                    current_fd = None
+            
+            elif line.startswith('n') and current_pid is not None and current_fd is not None:
+                # File/socket name
+                file_path = line[1:]
+                
+                # Only store real paths or sockets (no special types)
+                if file_path and not file_path.startswith('type='):
+                    key = (current_pid, current_fd)
+                    fd_mappings[key] = file_path
+        
+        return fd_mappings
+    
+    def _load_initial_fd_state(self, trace_dir: Path):
+        """
+        Load initial FD state from lsof snapshot and pre-populate fd_map.
+        
+        Args:
+            trace_dir: Path to trace directory containing initial_fd_state.json
+        """
+        fd_state_file = trace_dir / 'initial_fd_state.json'
+        
+        if not fd_state_file.exists():
+            logger.info("No initial FD state file found - skipping lsof integration")
+            return
+        
+        try:
+            with open(fd_state_file, 'r') as f:
+                lsof_data = json.load(f)
+            
+            # Parse each process's lsof output
+            all_fd_mappings = {}
+            for pid_str, raw_output in lsof_data.items():
+                fd_mappings = self._parse_lsof_output(raw_output)
+                all_fd_mappings.update(fd_mappings)
+            
+            # Pre-populate fd_map with lsof data
+            # Use timestamp 0.0 as start (before trace) and None as end (still open)
+            for (pid, fd), file_path in all_fd_mappings.items():
+                key = (pid, fd)
+                if key not in self.fd_map:
+                    self.fd_map[key] = []
+                
+                # Add lsof mapping with timestamp 0.0 (pre-trace)
+                # This will be overridden if we see an open() during trace
+                self.fd_map[key].append((0.0, None, file_path))
+                self.fd_mappings_from_lsof += 1
+            
+            logger.info(f"Loaded {len(all_fd_mappings)} FD mappings from lsof initial state")
+            logger.info(f"Pre-populated fd_map with {self.fd_mappings_from_lsof} entries")
+            
+        except Exception as e:
+            logger.warning(f"Failed to load initial FD state: {e}")
+            logger.debug(f"Error details: {e}", exc_info=True)
     
     def build_sequences(self) -> List[EventSequence]:
         """
@@ -165,7 +265,7 @@ class EventSequenceBuilder:
         self.sequences.sort(key=lambda s: s.start_time)
         
         logger.info(f"Built {len(self.sequences)} event sequences")
-        logger.info(f"FD tracking: {self.fd_mappings_created} created, {self.fd_mappings_resolved} resolved, {self.fd_mappings_cleaned} cleaned")
+        logger.info(f"FD tracking: {self.fd_mappings_from_lsof} from lsof, {self.fd_mappings_created} from trace, {self.fd_mappings_resolved} resolved, {self.fd_mappings_cleaned} closed")
         return self.sequences
     
     def _pair_syscalls(self) -> List[Dict[str, any]]:
@@ -448,6 +548,10 @@ class EventSequenceBuilder:
         Resolve a file descriptor to its file path or socket_id at a specific time.
         Uses temporal FD tracking to handle FD reuse correctly.
         
+        Resolution order:
+        1. Check runtime-captured open/socket syscalls (most accurate)
+        2. Fall back to lsof initial state (for pre-trace FDs)
+        
         Args:
             pid: Process ID
             fd: File descriptor number
@@ -461,6 +565,8 @@ class EventSequenceBuilder:
             return None
         
         # Find mapping where: start_time <= op_time <= end_time (or end_time is None)
+        # The list is ordered, with lsof entries (start_time=0.0) first,
+        # then runtime entries in chronological order
         for start_time, end_time, path in self.fd_map[key]:
             if start_time <= op_time:
                 if end_time is None or op_time <= end_time:

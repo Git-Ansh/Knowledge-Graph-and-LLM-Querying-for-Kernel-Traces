@@ -390,7 +390,9 @@ class GraphBuilder:
                         return_value: $return_value,
                         bytes_transferred: $bytes_transferred,
                         duration_ms: $duration_ms,
-                        cpu_id: $cpu_id
+                        cpu_id: $cpu_id,
+                        tid: $tid,
+                        pid: $pid
                     })
                     """,
                     sequence_id=sequence['sequence_id'],
@@ -403,7 +405,9 @@ class GraphBuilder:
                     return_value=sequence.get('return_value'),
                     bytes_transferred=sequence.get('bytes_transferred', 0),
                     duration_ms=sequence.get('duration_ms', 0),
-                    cpu_id=sequence.get('cpu_id', -1)
+                    cpu_id=sequence.get('cpu_id', -1),
+                    tid=sequence.get('thread_id'),  # Use thread_id from dataclass
+                    pid=sequence.get('process_id')  # Use process_id from dataclass
                 )
                 self.stats.nodes_created += 1
                 self.stats.node_counts['EventSequence'] = self.stats.node_counts.get('EventSequence', 0) + 1

@@ -206,8 +206,12 @@ class PipelineOrchestrator:
         
         stage_start = datetime.now()
         
-        # Build
-        self.sequence_builder = EventSequenceBuilder(self.parser.events, self.schema_config)
+        # Build (pass trace_dir for lsof integration)
+        self.sequence_builder = EventSequenceBuilder(
+            self.parser.events, 
+            self.schema_config,
+            trace_dir=self.trace_dir
+        )
         sequences = self.sequence_builder.build_sequences()
         
         # Save

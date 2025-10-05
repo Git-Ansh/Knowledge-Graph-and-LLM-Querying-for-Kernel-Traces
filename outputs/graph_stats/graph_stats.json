@@ -1,18 +1,18 @@
 {
-  "nodes_created": 8328,
-  "relationships_created": 11681,
+  "nodes_created": 18034,
+  "relationships_created": 24266,
   "node_counts": {
-    "Process": 51,
-    "Thread": 157,
-    "File": 1249,
-    "Socket": 42,
+    "Process": 61,
+    "Thread": 187,
+    "File": 1237,
+    "Socket": 63,
     "CPU": 6,
-    "EventSequence": 6823
+    "EventSequence": 16480
   },
   "relationship_counts": {
-    "CONTAINS": 157,
-    "PERFORMED": 6823,
-    "SCHEDULED_ON": 157,
-    "WAS_TARGET_OF": 4544
+    "CONTAINS": 187,
+    "PERFORMED": 16480,
+    "SCHEDULED_ON": 187,
+    "WAS_TARGET_OF": 7412
   }
 }

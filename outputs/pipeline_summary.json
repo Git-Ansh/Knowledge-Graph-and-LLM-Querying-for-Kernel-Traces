@@ -1,39 +1,39 @@
 {
-  "start_time": "2025-10-04T19:01:58.053557",
-  "end_time": "2025-10-04T19:04:05.013964",
-  "total_duration_seconds": 126.960407,
+  "start_time": "2025-10-04T21:35:18.468517",
+  "end_time": "2025-10-04T21:46:38.972950",
+  "total_duration_seconds": 680.504433,
   "stages": {
     "parse": {
-      "duration_seconds": 22.630146,
-      "events_extracted": 2627034,
-      "parse_rate": 116085.59661965945
+      "duration_seconds": 52.264264,
+      "events_extracted": 5123563,
+      "parse_rate": 98031.85978090116
     },
     "extract": {
-      "duration_seconds": 3.264945,
-      "entities_extracted": 2827
+      "duration_seconds": 6.820159,
+      "entities_extracted": 2842
     },
     "sequences": {
-      "duration_seconds": 3.924996,
-      "sequences_created": 6823
+      "duration_seconds": 12.042759,
+      "sequences_created": 16480
     },
     "graph": {
-      "duration_seconds": 97.139541,
-      "nodes_created": 8328,
-      "relationships_created": 11681
+      "duration_seconds": 609.375696,
+      "nodes_created": 18034,
+      "relationships_created": 24266
     }
   },
   "trace_metadata": {
     "application": "redis",
-    "session_name": "app_redis_20251003_185958",
-    "timestamp": "20251003_185958",
+    "session_name": "app_redis_20251004_211159",
+    "timestamp": "20251004_211159",
     "command": [
       "redis-server",
       "--daemonize",
       "no"
     ],
     "description": "Trace Redis to capture complete event sequences for KG construction.",
-    "trace_duration": null,
-    "start_time": "2025-10-03T18:59:58.921449",
+    "trace_duration": 3,
+    "start_time": "2025-10-04T21:11:59.715121",
     "setup_commands": [
       "sudo",
       "systemctl",
@@ -47,8 +47,10 @@
       "redis-cli del test_key"
     ],
     "success": true,
-    "execution_time": 9.208314180374146,
+    "execution_time": 13.136728286743164,
     "return_code": 0,
-    "end_time": "2025-10-03T19:00:20.617158"
+    "fd_capture_enabled": true,
+    "fork_tracking_enabled": true,
+    "end_time": "2025-10-04T21:12:44.861219"
   }
 }

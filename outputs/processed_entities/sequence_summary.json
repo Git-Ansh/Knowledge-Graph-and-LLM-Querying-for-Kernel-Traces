@@ -1,24 +1,24 @@
 {
-  "total_sequences": 6823,
+  "total_sequences": 16480,
   "operations": {
-    "write": 568,
-    "read": 762,
-    "socket_send": 201,
-    "socket_recv": 375,
-    "close": 4476,
-    "open": 301,
-    "mmap": 94,
-    "socket": 46
+    "write": 821,
+    "socket_recv": 432,
+    "socket_send": 228,
+    "read": 1171,
+    "close": 13219,
+    "socket": 63,
+    "open": 426,
+    "mmap": 120
   },
-  "total_bytes_transferred": 218840152954219955,
+  "total_bytes_transferred": 301900821292131044,
   "average_durations_ms": {
-    "write": 38.78268277290311,
-    "read": 22.76015600751859,
-    "socket_send": 70.30162008914202,
-    "socket_recv": 93.79390202097905,
-    "close": 0.001780365740056828,
-    "open": 2.9823856016460875,
-    "mmap": 7.546451861847519,
-    "socket": 0.013032195451871856
+    "write": 96.00726025112455,
+    "socket_recv": 301.77025510848006,
+    "socket_send": 284.3858462281851,
+    "read": 56.114016971219826,
+    "close": 0.003342120990543071,
+    "socket": 0.01109614233774621,
+    "open": 11.314878783806636,
+    "mmap": 3.15281126810684
   }
 }

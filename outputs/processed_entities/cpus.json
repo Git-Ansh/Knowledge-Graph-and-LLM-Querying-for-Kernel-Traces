@@ -1,26 +1,26 @@
 [
   {
-    "cpu_id": 2,
-    "event_count": 473829
-  },
-  {
-    "cpu_id": 0,
-    "event_count": 456386
-  },
-  {
-    "cpu_id": 1,
-    "event_count": 249473
+    "cpu_id": 3,
+    "event_count": 880136
   },
   {
     "cpu_id": 5,
-    "event_count": 506436
+    "event_count": 870586
   },
   {
     "cpu_id": 4,
-    "event_count": 440771
+    "event_count": 765308
   },
   {
-    "cpu_id": 3,
-    "event_count": 500139
+    "cpu_id": 1,
+    "event_count": 496911
+  },
+  {
+    "cpu_id": 0,
+    "event_count": 1073356
+  },
+  {
+    "cpu_id": 2,
+    "event_count": 1037266
   }
 ]

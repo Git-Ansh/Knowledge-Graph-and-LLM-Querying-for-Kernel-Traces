@@ -238,6 +238,13 @@ class LTTngBenchmarkTracer:
                 "Enabling all syscalls for complete sequence capture",
                 check=False
             )
+            
+            # IMPROVED: Explicitly enable fork/execve for FD inheritance tracking
+            self._run_command(
+                ["lttng", "enable-event", "-k", "--syscall", "fork,vfork,clone,execve,execveat", "-c", "kernel_channel"],
+                "Enabling fork/execve syscalls for FD inheritance tracking",
+                check=False
+            )
 
             # --- USERSPACE TRACING (for Application Layer) ---
             ust_events = app_info.get("ust_events", [])
@@ -318,7 +325,55 @@ class LTTngBenchmarkTracer:
             logger.warning(f"  Could not destroy session: {e}")
             return False
 
-    def run_application_trace(self, app_info, trace_duration=None):
+    def capture_initial_fd_state(self, app_name):
+        """Capture initial FD state using lsof before tracing starts."""
+        logger.info(" Capturing initial FD state with lsof...")
+        
+        try:
+            # Get all redis-related processes
+            ps_result = subprocess.run(
+                ["pgrep", "-f", app_name],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            
+            if ps_result.returncode == 0:
+                pids = ps_result.stdout.strip().split('\n')
+                fd_state = {}
+                
+                for pid in pids:
+                    if not pid:
+                        continue
+                    
+                    try:
+                        lsof_result = subprocess.run(
+                            ["lsof", "-p", pid, "-Fn"],
+                            capture_output=True,
+                            text=True,
+                            check=False
+                        )
+                        
+                        if lsof_result.returncode == 0:
+                            fd_state[pid] = lsof_result.stdout
+                            
+                    except Exception as e:
+                        logger.debug(f"  Could not capture FDs for PID {pid}: {e}")
+                
+                if fd_state:
+                    logger.info(f" Captured FD state for {len(fd_state)} processes")
+                    return fd_state
+                else:
+                    logger.info(" No pre-existing processes found (will start fresh)")
+            else:
+                logger.info(f" No pre-existing {app_name} processes found")
+                
+        except Exception as e:
+            logger.debug(f"  Could not capture initial FD state: {e}")
+        
+        return {}
+
+    def run_application_trace(self, app_info, trace_duration=None, fd_state_file=None):
         """Execute application tracing with realistic workload."""
         logger.info(f" Starting application: {app_info['name']}")
         logger.info(f" Description: {app_info['description']}")
@@ -334,6 +389,13 @@ class LTTngBenchmarkTracer:
                     f"Running setup for {app_info['name']}",
                     check=False
                 )
+            
+            # Capture pre-existing FD state (for improved resolution)
+            fd_state = self.capture_initial_fd_state(app_info["name"].split()[0].lower())
+            if fd_state and fd_state_file:
+                logger.info(f" Saving initial FD state to {fd_state_file}")
+                with open(fd_state_file, 'w') as f:
+                    json.dump(fd_state, f, indent=2)
 
             # Check if this is a workload-only application (runs to completion)
             if app_info.get("workload_only"):
@@ -353,15 +415,20 @@ class LTTngBenchmarkTracer:
                     "return_code": result.returncode if result else -1
                 }
 
-            # Start the application in background
+            # IMPROVED: Start the application in background
+            # This allows us to capture the open() syscalls from the beginning
             logger.info(f" Starting {app_info['name']} in background...")
             app_process = subprocess.Popen(
                 app_info["command"],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL
             )
+            
+            # Capture PID for FD tracking
+            app_pid = app_process.pid
+            logger.info(f" Application started with PID: {app_pid}")
 
-            # Wait for application to start
+            # Wait for application to start (reduced wait time since tracing is already active)
             time.sleep(2)
 
             # Run test commands to generate realistic workload
@@ -581,13 +648,18 @@ class LTTngBenchmarkTracer:
             if not self.create_lttng_session(session_name, trace_output_dir, app_info):
                 return False
 
-            # Start tracing
+            # IMPROVED: Start tracing BEFORE starting the application
+            # This captures all open() syscalls from the very beginning
+            logger.info(" Starting tracing BEFORE application launch (improved FD resolution)")
             if not self.start_tracing(session_name):
                 return False
 
-            # Run application with realistic workload
-            app_result = self.run_application_trace(app_info, trace_duration)
+            # Run application with realistic workload (tracing already active)
+            fd_state_file = trace_output_dir / "initial_fd_state.json"
+            app_result = self.run_application_trace(app_info, trace_duration, fd_state_file)
             metadata.update(app_result)
+            metadata["fd_capture_enabled"] = True
+            metadata["fork_tracking_enabled"] = True
 
             # Stop tracing
             self.stop_tracing(session_name)
